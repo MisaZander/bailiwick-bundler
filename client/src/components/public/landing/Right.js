@@ -5,6 +5,7 @@ class Right extends Component {
   render() {
     return (
       <div className="row">
+        <hr />
         <div className="col-6">
           <h3 className="text-center">{this.props.title}</h3>
           <p className="lead text-center">{this.props.body}</p>

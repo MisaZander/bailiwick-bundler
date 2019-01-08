@@ -5,6 +5,7 @@ class Left extends Component {
   render() {
     return (
       <div className="row">
+        <hr />
         <div className="col-6">
           <img src={this.props.img} alt="" />
         </div>
