@@ -8,7 +8,7 @@ import Finale from "./Finale";
 class Landing extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="container border border-dark">
         <h1 className="display-4 text-center">
           Your Search for a Dallas Model Ends Here!
         </h1>
