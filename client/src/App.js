@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "./components/public/layout/Navbar";
 import Landing from "./components/public/landing/Landing";
 import Gallery from "./components/public/gallery/Gallery";
+import Form from "./components/public/contact/Form";
 import Footer from "./components/public/layout/Footer";
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
             <Navbar />
             <Route exact path="/" component={Landing} />
             <Route exact path="/gallery" component={Gallery} />
+            <Route exact path="/contact/form" component={Form} />
             <Footer />
           </div>
         </Router>
