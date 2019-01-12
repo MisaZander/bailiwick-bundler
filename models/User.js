@@ -12,9 +12,16 @@ const UserSchema = new Schema({
     required: true,
     unique: true
   },
+  phone: {
+    type: String
+  },
   hash: {
     type: String,
     required: true
+  },
+  userlevel: {
+    type: Number,
+    default: 0
   }
 });
 
