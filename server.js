@@ -7,6 +7,7 @@ const path = require("path");
 // const users = require("./routes/api/users");
 // const profile = require("./routes/api/profile");
 // const posts = require("./routes/api/posts");
+const content = require("./routes/api/content");
 
 const app = express();
 
@@ -26,6 +27,7 @@ require("./config/passport")(passport);
 // app.use("/api/users", users);
 // app.use("/api/profile", profile);
 // app.use("/api/posts", posts);
+app.use("/api/content", content);
 
 //If production, serve the build folder
 if (process.env.NODE_ENV === "production") {
@@ -45,6 +47,7 @@ mongoose
     { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false }
   )
   .then(() => {
+    console.log("Connected to Mongo.");
     app.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
   })
   .catch(err => console.log(err));
