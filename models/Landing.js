@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const LandingSchema = new Schema({
+  contentName: {
+    type: String,
+    required: true,
+    unique: true
+  },
   title: {
     type: String
   },

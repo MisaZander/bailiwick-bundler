@@ -14,6 +14,7 @@ router.get("/", (req, res) => {
       errors.err = err;
       return res.status(404).json(errors);
     }
+    //This returns an array, even if there's a single result
     return res.status(200).json(landing);
   }); //Landing.find.exec()
 }); //router.get()
@@ -25,9 +26,10 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const errors = {};
   //TODO: Call input validator
-  const { title, blurbs, calltoaction, finishers } = req.body;
+  const { contentName, title, blurbs, calltoaction, finishers } = req.body;
 
   const newLanding = new Landing({
+    contentName,
     title,
     blurbs,
     calltoaction,
