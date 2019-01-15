@@ -8,7 +8,7 @@ import Right from "./Right";
 import Left from "./Left";
 //import mirror from "../../../img/gallery/mirror.png";
 //import barber from "../../../img/gallery/Barber.png";
-//import Finale from "./Finale";
+import Finale from "./Finale";
 import Spinner from "../../common/Spinner";
 import ServerFault from "../../errors/ServerFault";
 
@@ -19,7 +19,7 @@ class Landing extends Component {
 
   render() {
     const { content, isLoading } = this.props.content;
-    let title, blurbs;
+    let title, blurbs, finale;
     if (isEmpty(content) || isLoading) {
       //console.log("Adjust keep spinning spinning spinning...");
       title = <Spinner />;
@@ -42,8 +42,7 @@ class Landing extends Component {
             <Left key={index + 1} blurb={blurb} />
           );
         });
-
-        //TODO: Finale
+        finale = <Finale finishers={content[0].finishers} />;
       } else {
         //console.log(content.length);
         title = (
@@ -58,6 +57,7 @@ class Landing extends Component {
       <div className="container border border-dark">
         {title}
         {blurbs}
+        {finale}
       </div>
     );
   }
