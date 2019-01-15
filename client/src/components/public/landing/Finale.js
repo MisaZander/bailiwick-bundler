@@ -11,9 +11,9 @@ class Finale extends Component {
           <div className="col">
             <h1 className="display-4 text-center">Interested? Act Now!</h1>
             <div className="card-group">
-              {finishers.map(finisher => {
+              {finishers.map((finisher, index) => {
                 return (
-                  <div className="card">
+                  <div className="card" key={index}>
                     <div className="card-body">
                       <p className="card-text lead text-center">
                         {finisher.body}

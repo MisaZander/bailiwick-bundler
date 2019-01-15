@@ -9,6 +9,7 @@ import Landing from "./components/public/landing/Landing";
 import Gallery from "./components/public/gallery/Gallery";
 import Form from "./components/public/contact/Form";
 import Register from "./components/public/auth/Register";
+import Login from "./components/public/auth/Login";
 import Footer from "./components/public/layout/Footer";
 import PrivNavbar from "./components/private/layout/PrivNavbar";
 import AdminLanding from "./components/private/landing/AdminLanding";
@@ -26,6 +27,7 @@ class App extends Component {
             <Route exact path="/gallery" component={Gallery} />
             <Route exact path="/contact/form" component={Form} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
             <Route exact path="/admin" component={AdminLanding} />
             {isAdmin ? null : <Footer />}
           </div>

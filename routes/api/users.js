@@ -80,12 +80,12 @@ router.post("/login", (req, res) => {
       if (response) {
         //The response will be a bool returned
         //return res.status(200).json({ msg: "Oh hello" });
-        const { id, name, userLevel } = user;
+        const { id, name, userlevel } = user;
 
         const payload = {
           id,
           name,
-          userLevel
+          userlevel
         };
 
         //Sign the token

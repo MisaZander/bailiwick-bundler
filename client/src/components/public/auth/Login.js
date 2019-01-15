@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 //import classnames from "classnames";
-import { loginUser } from "../../actions/authActions";
-import TextFieldGroup from "../common/TextFieldGroup";
+import { loginUser } from "../../../actions/authActions";
+import TextFieldGroup from "../../common/TextFieldGroup";
 
 class Login extends Component {
   constructor() {
@@ -14,22 +14,18 @@ class Login extends Component {
       password: "",
       errors: {}
     };
-
-    //Equal to affixing a .bind() to each value
-    //this.onChange = this.onChange.bind(this);
-    //this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
     //But you're logged in, why do you want to be here?
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/");
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/");
     }
 
     if (nextProps.errors) {
@@ -63,9 +59,7 @@ class Login extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Log In</h1>
-              <p className="lead text-center">
-                Sign in to your DevConnector account
-              </p>
+              <p className="lead text-center">Sign in to your account</p>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   name="email"
