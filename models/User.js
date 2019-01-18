@@ -22,7 +22,9 @@ const UserSchema = new Schema({
   },
   userlevel: {
     type: Number,
-    default: 0
+    default: 0,
+    get: v => Math.floor(v),
+    set: v => Math.floor(v)
   }
 });
 
