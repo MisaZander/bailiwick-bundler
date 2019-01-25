@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import store from "./store";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import PubNavbar from "./components/public/layout/PubNavbar";
 import About from "./components/public/about/About";
@@ -14,6 +14,32 @@ import Footer from "./components/public/layout/Footer";
 import PrivNavbar from "./components/private/layout/PrivNavbar";
 import AdminLanding from "./components/private/landing/AdminLanding";
 
+//Loggin actions
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+//import { clearCurrentProfile } from "./actions/profileActions";
+
+//Errors
+import NotFound from "./components/errors/NotFound";
+
+if (localStorage.jwtToken) {
+  //Set the header token again
+  setAuthToken(localStorage.jwtToken);
+  //Decode token
+  const decodedToken = jwt_decode(localStorage.jwtToken);
+  //Set user and isAuthed
+  store.dispatch(setCurrentUser(decodedToken));
+
+  //Is the token expired?
+  const currentTime = Date.now() / 1000;
+  if (decodedToken.exp < currentTime) {
+    //Get out.
+    //store.dispatch(clearCurrentProfile());
+    store.dispatch(logoutUser());
+  }
+}
+
 class App extends Component {
   render() {
     const isAdmin = window.location.href.includes("admin");
@@ -22,13 +48,16 @@ class App extends Component {
         <Router>
           <div className="App">
             {isAdmin ? <PrivNavbar /> : <PubNavbar />}
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/gallery" component={Gallery} />
-            <Route exact path="/contact/form" component={Form} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/admin" component={AdminLanding} />
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/gallery" component={Gallery} />
+              <Route exact path="/contact/form" component={Form} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/admin" component={AdminLanding} />
+              <Route component={NotFound} />
+            </Switch>
             {isAdmin ? null : <Footer />}
           </div>
         </Router>

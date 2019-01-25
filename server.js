@@ -11,7 +11,7 @@ const content = require("./routes/api/content");
 
 const app = express();
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
