@@ -12,6 +12,39 @@ class PubNavbar extends Component {
   };
 
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+    let userInfo;
+    if (isAuthenticated) {
+      userInfo = (
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link className="nav-link" to="/profile">
+              {user.name}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="\#" onClick={this.onLogoutClick}>
+              Logout
+            </a>
+          </li>
+        </ul>
+      );
+    } else {
+      userInfo = (
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link className="nav-link" to="/register">
+              Register
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/login">
+              Login
+            </Link>
+          </li>
+        </ul>
+      );
+    }
     return (
       <nav className="navbar navbar-expand-sm navbar-light bg-light mb-4">
         <div className="container">
@@ -35,6 +68,8 @@ class PubNavbar extends Component {
               </Link>
             </li>
           </ul>
+          {"   |    "}
+          {userInfo}
         </div>
       </nav>
     );
