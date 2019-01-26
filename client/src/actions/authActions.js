@@ -2,7 +2,12 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import {
+  GET_ERRORS,
+  SET_CURRENT_USER,
+  GET_CURRENT_USER,
+  LOADING
+} from "./types";
 
 //Register user
 export const registerUser = (userData, history) => dispatch => {
@@ -17,6 +22,7 @@ export const registerUser = (userData, history) => dispatch => {
     );
 };
 
+//Login User
 export const loginUser = userData => dispatch => {
   axios
     .post("/api/users/login", userData)
@@ -39,12 +45,33 @@ export const loginUser = userData => dispatch => {
     );
 };
 
+//Dispatch current user to superstate
 export const setCurrentUser = decodedToken => {
   //This will be caught in the authReducer
   return {
     type: SET_CURRENT_USER,
     payload: decodedToken
   };
+};
+
+//Get all user data
+export const getCurrentUser = () => dispatch => {
+  dispatch(setLoading());
+  axios
+    .get("/api/users")
+    .then(response => {
+      dispatch({
+        type: GET_CURRENT_USER,
+        payload: response.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_CURRENT_USER,
+        payload: {}
+      });
+    });
 };
 
 export const logoutUser = () => dispatch => {
@@ -54,4 +81,10 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   //Set current user to nada
   dispatch(setCurrentUser({})); //An empty object will signal isAuthed to false as well
+};
+
+export const setLoading = () => {
+  return {
+    type: LOADING
+  };
 };

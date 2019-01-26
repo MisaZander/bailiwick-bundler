@@ -10,6 +10,7 @@ import Gallery from "./components/public/gallery/Gallery";
 import Form from "./components/public/contact/Form";
 import Register from "./components/public/auth/Register";
 import Login from "./components/public/auth/Login";
+import Profile from "./components/public/auth/Profile";
 import Footer from "./components/public/layout/Footer";
 import PrivNavbar from "./components/private/layout/PrivNavbar";
 import AdminLanding from "./components/private/landing/AdminLanding";
@@ -18,7 +19,7 @@ import AdminLanding from "./components/private/landing/AdminLanding";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-//import { clearCurrentProfile } from "./actions/profileActions";
+import PrivateRoute from "./components/common/PrivateRoute";
 
 //Errors
 import NotFound from "./components/errors/NotFound";
@@ -56,6 +57,7 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/admin" component={AdminLanding} />
+              <PrivateRoute exact path="/profile" component={Profile} />
               <Route component={NotFound} />
             </Switch>
             {isAdmin ? null : <Footer />}

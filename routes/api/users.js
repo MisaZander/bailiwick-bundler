@@ -5,6 +5,7 @@ const router = express.Router();
 const User = require("../../models/User"); //User model, with mongoose methods included
 const crypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 //Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -108,5 +109,27 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+//@route GET api/users
+//@desc Get the user deets
+//@access Private
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    User.findById(req.user.id, "name email").exec((err, user) => {
+      if (err) {
+        console.log(err);
+        errors.err = err;
+        return res.status(500).json(errors);
+      } else if (!user) {
+        errors.nouser = "User not found";
+        return res.status(404).json(errors);
+      }
+      return res.status(200).json(user);
+    });
+  }
+);
 
 module.exports = router;
