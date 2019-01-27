@@ -4,6 +4,7 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import {
   GET_ERRORS,
+  CLEAR_ERRORS,
   SET_CURRENT_USER,
   GET_CURRENT_USER,
   LOADING
@@ -35,6 +36,7 @@ export const loginUser = userData => dispatch => {
       //Decode token to get user data
       const decodedToken = jwt_decode(token);
       //Set current user
+      dispatch(clearErrors());
       dispatch(setCurrentUser(decodedToken));
     })
     .catch(err =>
@@ -74,6 +76,24 @@ export const getCurrentUser = () => dispatch => {
     });
 };
 
+export const updateUser = newDeets => dispatch => {
+  dispatch(setLoading());
+  axios
+    .put("/api/users", newDeets)
+    .then(response => {
+      dispatch({
+        type: GET_CURRENT_USER,
+        payload: response.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
 export const logoutUser = () => dispatch => {
   //Remove token from localStorage
   localStorage.removeItem("jwtToken");
@@ -81,6 +101,12 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   //Set current user to nada
   dispatch(setCurrentUser({})); //An empty object will signal isAuthed to false as well
+};
+
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
 };
 
 export const setLoading = () => {

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import TextFieldGroup from "../../common/TextFieldGroup";
 import isEmpty from "../../../validation/is-empty";
-import { getCurrentUser } from "../../../actions/authActions";
+import { getCurrentUser, updateUser } from "../../../actions/authActions";
 
 class Profile extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Profile extends Component {
       name: "",
       email: "",
       password: "",
-      passwordverify: "",
+      passwordVerify: "",
       errors: {}
     };
   }
@@ -42,10 +42,25 @@ class Profile extends Component {
   }
 
   onChange = e => {
-    this.state({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = e => {};
+  onSubmit = e => {
+    e.preventDefault();
+    //console.log("There was an attempt");
+    const newDeets = {
+      name: this.state.name,
+      email: this.state.email,
+      password: !isEmpty(this.state.password) ? this.state.password : "",
+      passwordVerify: !isEmpty(this.state.passwordVerify)
+        ? this.state.passwordVerify
+        : ""
+    };
+
+    this.props.updateUser(newDeets);
+    this.setState({ password: "", passwordVerify: "" });
+    alert("Profile updated!");
+  };
 
   //TODO: Start here and render the profile
   render() {
@@ -72,6 +87,36 @@ class Profile extends Component {
                 onChange={this.onChange}
                 error={errors.email}
               />
+              <hr className="my-3" />
+              <small>
+                If you want to change your password, fill out these fields and
+                submit.
+              </small>
+              <TextFieldGroup
+                label="New Password"
+                name="password"
+                type="password"
+                value={this.state.password}
+                placeholder="Enter new password..."
+                onChange={this.onChange}
+                error={errors.password}
+                info="New password must be between 5-30 characters"
+              />
+              <TextFieldGroup
+                name="passwordVerify"
+                type="password"
+                value={this.state.passwordVerify}
+                placeholder="Enter password again..."
+                onChange={this.onChange}
+                error={errors.passwordVerify}
+                label="Enter Same Password:"
+              />
+              <button
+                onClick={this.onSubmit}
+                className="btn btn-info btn-block"
+              >
+                Update Profile
+              </button>
             </form>
           </div>
         </div>
@@ -82,6 +127,7 @@ class Profile extends Component {
 
 Profile.propTypes = {
   getCurrentUser: PropTypes.func.isRequired,
+  updateUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -93,5 +139,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentUser }
+  { getCurrentUser, updateUser }
 )(Profile);

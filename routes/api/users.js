@@ -10,6 +10,8 @@ const passport = require("passport");
 //Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
+const validateUpdateInput = require("../../validation/update");
+const isEmpty = require("../../validation/is-empty");
 
 //@route POST api/users/resgister
 //@desc New user
@@ -86,6 +88,7 @@ router.post("/login", (req, res) => {
         const payload = {
           id,
           name,
+          email,
           userlevel
         };
 
@@ -118,7 +121,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const errors = {};
-    User.findById(req.user.id, "name email").exec((err, user) => {
+    User.findById(req.user.id, "name email userlevel").exec((err, user) => {
       if (err) {
         console.log(err);
         errors.err = err;
@@ -131,5 +134,86 @@ router.get(
     });
   }
 );
+
+//@route PUT api/users
+//@desc Change credentials of a user
+//@access Private
+router.put(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    //Make sure the first two fields are valid
+    let { errors, isValid } = validateUpdateInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const { name, email, password, passwordVerify } = req.body;
+    let updatedDeets = {
+      name,
+      email
+    };
+    User.findOne({ email: email }).exec((err, user) => {
+      if (err) {
+        errors.err = err;
+        return res.status(500).json(errors);
+      }
+
+      if (req.user.email !== email) {
+        //Requesting an email change
+        if (user) {
+          //Requesting a change, but email already exists
+          errors.email = "Email already in use";
+          return res.status(409).json(errors);
+        }
+        //No need for else above. email already contains requested value
+      } else {
+        //Email unchanged. Keep it to current token value
+        updatedDeets.email = req.user.email;
+      }
+
+      if (!isEmpty(password)) {
+        updatedDeets.password = password;
+        updatedDeets.passwordVerify = passwordVerify;
+        let { errors, isValid } = validateRegisterInput(updatedDeets);
+        if (!isValid) {
+          return res.status(400).json(errors);
+        }
+        crypt.hash(password, 10, (err, hash) => {
+          if (err) {
+            throw err;
+          }
+          updatedDeets.hash = hash;
+          User.findByIdAndUpdate(
+            req.user.id,
+            updatedDeets,
+            { new: true, select: "name email userlevel" },
+            (err, updUser) => {
+              if (err) {
+                console.log(err);
+                return res.status(500).json(err);
+              }
+              return res.status(200).json(updUser);
+            }
+          ); //Update user(/w password)
+        }); //hash cb
+      } else {
+        //If update password
+        User.findByIdAndUpdate(
+          req.user.id,
+          updatedDeets,
+          { new: true, select: "name email userlevel" },
+          (err, updUser) => {
+            if (err) {
+              console.log(err);
+              return res.status(500).json(err);
+            }
+            return res.status(200).json(updUser);
+          }
+        ); //Update user (/wo password)
+      }
+    }); //Email uniqueness check
+  }
+); //router.put
 
 module.exports = router;
