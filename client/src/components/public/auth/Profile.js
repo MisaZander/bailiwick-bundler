@@ -65,6 +65,7 @@ class Profile extends Component {
   //TODO: Start here and render the profile
   render() {
     const { errors } = this.state;
+    console.log("Render!");
     return (
       <div className="container">
         <div className="row">

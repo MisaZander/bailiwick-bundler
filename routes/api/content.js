@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Landing = require("../../models/Landing"); //Landing model, with mongoose methods included
-const crypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 //@route GET /api/content
 //@desc Obtain all the landing content
@@ -22,27 +21,37 @@ router.get("/", (req, res) => {
 //@route POST /api/content
 //@desc Rewrite the landing content
 //@access Private
-//TODO: Privatize this route
-router.post("/", (req, res) => {
-  const errors = {};
-  //TODO: Call input validator
-  const { contentName, title, blurbs, calltoaction, finishers } = req.body;
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
 
-  const newLanding = new Landing({
-    contentName,
-    title,
-    blurbs,
-    calltoaction,
-    finishers
-  }); //new Landing()
-
-  newLanding.save((err, landing) => {
-    if (err) {
-      errors.err = err;
-      return res.status(400).json(errors);
+    //Are you even allowed to mess with this?
+    if (req.user.userlevel === 0) {
+      errors.forbidden =
+        "You do not have the necessary authority to perform that action";
+      return res.status(403).json(errors);
     }
-    return res.status(200).json(landing);
-  }); //newLanding.save()
-}); //router.post()
+    //TODO: Call input validator
+    const { contentName, title, blurbs, calltoaction, finishers } = req.body;
+
+    const newLanding = new Landing({
+      contentName,
+      title,
+      blurbs,
+      calltoaction,
+      finishers
+    }); //new Landing()
+
+    newLanding.save((err, landing) => {
+      if (err) {
+        errors.err = err;
+        return res.status(400).json(errors);
+      }
+      return res.status(200).json(landing);
+    }); //newLanding.save()
+  }
+); //router.post()
 
 module.exports = router;

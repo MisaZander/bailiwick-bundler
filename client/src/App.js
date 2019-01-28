@@ -22,6 +22,7 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import PrivateRoute from "./components/common/PrivateRoute";
 
 //Errors
+import Forbidden from "./components/errors/Forbidden";
 import NotFound from "./components/errors/NotFound";
 
 if (localStorage.jwtToken) {
@@ -56,8 +57,19 @@ class App extends Component {
               <Route exact path="/contact/form" component={Form} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/admin" component={AdminLanding} />
-              <PrivateRoute exact path="/profile" component={Profile} />
+              <PrivateRoute
+                exact
+                path="/admin"
+                minlevel={1}
+                component={AdminLanding}
+              />
+              <PrivateRoute
+                exact
+                path="/profile"
+                minlevel={0}
+                component={Profile}
+              />
+              <Route exact path="/forbidden" component={Forbidden} />
               <Route component={NotFound} />
             </Switch>
             {isAdmin ? null : <Footer />}
