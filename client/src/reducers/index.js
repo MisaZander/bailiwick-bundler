@@ -5,10 +5,12 @@ import { combineReducers } from "redux";
 import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
 import contentReducer from "./contentReducer";
+import { reducer as reduxFormReducer } from "redux-form";
 
 //Use {this.props.KEY} to invoke the application reducer
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
-  content: contentReducer
+  content: contentReducer,
+  form: reduxFormReducer
 });

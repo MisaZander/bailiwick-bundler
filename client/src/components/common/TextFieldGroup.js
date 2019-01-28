@@ -1,32 +1,27 @@
 import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+import { Field, reduxForm } from "redux-form";
 
 //I am a functional component. I don't directly alter state
 const TextFieldGroup = ({
   name,
   placeholder,
-  value,
   label,
   error,
   info,
   type,
-  onChange,
   disabled
 }) => {
   return (
     <div className="form-group">
       {label && <label htmlFor={name}>{label}</label>}
-      <input
+      <Field
         type={type}
-        className={classnames("form-control form-control-lg", {
-          "is-invalid": error
-        })}
         placeholder={placeholder}
         name={name}
-        value={value}
-        onChange={onChange}
         disabled={disabled}
+        component={CustomInput}
       />
       {info && <small className="form-text text-muted">{info}</small>}
       {error && <div className="invalid-feedback">{error}</div>}
@@ -34,14 +29,24 @@ const TextFieldGroup = ({
   );
 };
 
+const CustomInput = props => (
+  <input
+    className={classnames("form-control form-control-lg", {
+      "is-invalid": props.error
+    })}
+    placeholder={props.placeholder}
+    value={props.value}
+    onChange={props.onChange}
+    {...props}
+  />
+);
+
 TextFieldGroup.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
   info: PropTypes.string,
   error: PropTypes.string,
   type: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
   disabled: PropTypes.string
 };
 
@@ -49,4 +54,8 @@ TextFieldGroup.defaultProps = {
   type: "text"
 };
 
-export default TextFieldGroup;
+//Export currently typed data to the Redux state
+export default reduxForm({
+  form: "TFGData",
+  enableReinitialize: true
+})(TextFieldGroup);

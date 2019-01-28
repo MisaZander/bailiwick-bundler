@@ -3,23 +3,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import TextFieldGroup from "../../common/TextFieldGroup";
+import { formValueSelector } from "redux-form";
 
 //To use Redux, you must connect a component to app state
 import { connect } from "react-redux";
 import { registerUser } from "../../../actions/authActions";
+const selector = formValueSelector("TFGData");
 
 class Register extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: "",
-      email: "",
-      password: "",
-      passwordVerify: "",
-      errors: {}
-    };
-  }
-
   componentDidMount() {
     //But you're logged in, why do you want to be here?
     if (this.props.auth.isAuthenticated) {
@@ -27,20 +18,10 @@ class Register extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
   onSubmit = e => {
     e.preventDefault();
 
-    const { name, email, password, passwordVerify } = this.state;
+    const { name, email, password, passwordVerify } = this.props;
 
     const newUser = {
       name,
@@ -54,7 +35,7 @@ class Register extends Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
 
     return (
       <div className="register">
@@ -67,18 +48,14 @@ class Register extends Component {
                 <TextFieldGroup
                   name="name"
                   type="name"
-                  value={this.state.name}
                   placeholder="Enter your name..."
-                  onChange={this.onChange}
                   error={errors.name}
                   label="Enter Name:"
                 />
                 <TextFieldGroup
                   name="email"
                   type="email"
-                  value={this.state.email}
                   placeholder="Enter your email..."
-                  onChange={this.onChange}
                   error={errors.email}
                   label="Enter Email:"
                   info="Your email address may be sold to the highest bidder from a South American country"
@@ -86,9 +63,7 @@ class Register extends Component {
                 <TextFieldGroup
                   name="password"
                   type="password"
-                  value={this.state.password}
                   placeholder="Enter password..."
-                  onChange={this.onChange}
                   error={errors.password}
                   label="Enter Password:"
                   info="Password should be between 5-30 characters. We don't enforce strong ones yet."
@@ -96,9 +71,7 @@ class Register extends Component {
                 <TextFieldGroup
                   name="passwordVerify"
                   type="password"
-                  value={this.state.passwordVerify}
                   placeholder="Enter password again..."
-                  onChange={this.onChange}
                   error={errors.passwordVerify}
                   label="Enter Same Password:"
                 />
@@ -118,12 +91,15 @@ Register.propTypes = {
   errors: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth, //state.auth comes from the root reducer
-  errors: state.errors
-});
-
 export default connect(
-  mapStateToProps,
+  state => {
+    const formValues = {
+      name: selector(state, "name"),
+      email: selector(state, "email"),
+      password: selector(state, "password"),
+      passwordVerify: selector(state, "passwordVerify")
+    };
+    return formValues;
+  },
   { registerUser }
 )(withRouter(Register));

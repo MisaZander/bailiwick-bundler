@@ -2,45 +2,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-//import classnames from "classnames";
 import { loginUser } from "../../../actions/authActions";
 import TextFieldGroup from "../../common/TextFieldGroup";
+import { formValueSelector } from "redux-form";
+const selector = formValueSelector("TFGData");
 
 class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      errors: {}
-    };
-  }
-
-  componentDidMount() {
-    //But you're logged in, why do you want to be here?
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/");
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/");
-    }
-
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
   onSubmit = e => {
-    e.preventDefault();
-
-    const { email, password } = this.state;
+    //Set by redux-form
+    const { email, password } = this.props;
 
     const userData = {
       email,
@@ -51,8 +21,8 @@ class Login extends Component {
   };
 
   render() {
-    const { errors } = this.state;
-
+    const { errors } = this.props;
+    console.log(errors);
     return (
       <div className="login">
         <div className="container">
@@ -60,26 +30,28 @@ class Login extends Component {
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Log In</h1>
               <p className="lead text-center">Sign in to your account</p>
-              <form onSubmit={this.onSubmit}>
+              <form>
                 <TextFieldGroup
                   name="email"
                   type="email"
-                  value={this.state.email}
                   placeholder="Enter your email..."
-                  onChange={this.onChange}
                   error={errors.email}
                   label="Enter Email:"
                 />
                 <TextFieldGroup
                   name="password"
                   type="password"
-                  value={this.state.password}
                   placeholder="Enter password..."
-                  onChange={this.onChange}
                   error={errors.password}
                   label="Enter Password:"
                 />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <button
+                  type="button"
+                  className="btn btn-info btn-block mt-4"
+                  onClick={this.onSubmit}
+                >
+                  Submit
+                </button>
               </form>
             </div>
           </div>
@@ -95,12 +67,15 @@ Login.propTypes = {
   errors: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
+//Redux-form values will be written to props
+//You MUST include names of any reducers you write yourself
+//You MUST also include a selector for any form value you want as a prop
 export default connect(
-  mapStateToProps,
+  state => ({
+    auth: state.auth,
+    errors: state.errors,
+    email: selector(state, "email"),
+    password: selector(state, "password")
+  }),
   { loginUser }
 )(Login);

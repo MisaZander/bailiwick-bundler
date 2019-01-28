@@ -2,48 +2,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { formValueSelector } from "redux-form";
 
 import TextFieldGroup from "../../common/TextFieldGroup";
 import isEmpty from "../../../validation/is-empty";
 import { getCurrentUser, updateUser } from "../../../actions/authActions";
+const selector = formValueSelector("TFGData");
 
 class Profile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      email: "",
-      password: "",
-      passwordVerify: "",
-      errors: {}
-    };
-  }
-
   componentDidMount() {
     this.props.getCurrentUser();
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-
-    if (nextProps.auth.user) {
-      const user = nextProps.auth.user;
-
-      user.name = !isEmpty(user.name) ? user.name : "";
-      user.email = !isEmpty(user.email) ? user.email : "";
-
-      this.setState({
-        name: user.name,
-        email: user.email
-      });
-    }
-  }
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
 
   onSubmit = e => {
     e.preventDefault();
@@ -58,13 +27,13 @@ class Profile extends Component {
     };
 
     this.props.updateUser(newDeets);
-    this.setState({ password: "", passwordVerify: "" });
+    // this.setState({ password: "", passwordVerify: "" });
     alert("Profile updated!");
   };
 
   //TODO: Start here and render the profile
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
     console.log("Render!");
     return (
       <div className="container">
@@ -75,40 +44,33 @@ class Profile extends Component {
               <TextFieldGroup
                 label="Name"
                 name="name"
-                value={this.state.name}
                 placeholder="Your Name..."
-                onChange={this.onChange}
                 error={errors.name}
               />
               <TextFieldGroup
                 label="Email"
                 name="email"
-                value={this.state.email}
+                type="email"
                 placeholder="Your email..."
-                onChange={this.onChange}
                 error={errors.email}
               />
               <hr className="my-3" />
-              <small>
+              <h4>
                 If you want to change your password, fill out these fields and
                 submit.
-              </small>
+              </h4>
               <TextFieldGroup
                 label="New Password"
                 name="password"
                 type="password"
-                value={this.state.password}
                 placeholder="Enter new password..."
-                onChange={this.onChange}
                 error={errors.password}
                 info="New password must be between 5-30 characters"
               />
               <TextFieldGroup
                 name="passwordVerify"
                 type="password"
-                value={this.state.passwordVerify}
                 placeholder="Enter password again..."
-                onChange={this.onChange}
                 error={errors.passwordVerify}
                 label="Enter Same Password:"
               />
@@ -133,12 +95,15 @@ Profile.propTypes = {
   errors: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
 export default connect(
-  mapStateToProps,
+  state => {
+    const formValues = {
+      name: selector(state, "name"),
+      email: selector(state, "email"),
+      password: selector(state, "password"),
+      passwordVerify: selector(state, "passwordVerify")
+    };
+    return formValues;
+  },
   { getCurrentUser, updateUser }
 )(Profile);
