@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import PubNavbar from "./components/public/layout/PubNavbar";
 import About from "./components/public/about/About";
 import Landing from "./components/public/landing/Landing";
 import Gallery from "./components/public/gallery/Gallery";
@@ -11,8 +10,6 @@ import Form from "./components/public/contact/Form";
 import Register from "./components/public/auth/Register";
 import Login from "./components/public/auth/Login";
 import Profile from "./components/public/auth/Profile";
-import Footer from "./components/public/layout/Footer";
-import PrivNavbar from "./components/private/layout/PrivNavbar";
 import AdminLanding from "./components/private/landing/AdminLanding";
 
 //Loggin actions
@@ -44,12 +41,10 @@ if (localStorage.jwtToken) {
 
 class App extends Component {
   render() {
-    const isAdmin = window.location.href.includes("admin");
     return (
       <Provider store={store}>
         <Router>
           <div className="App">
-            {isAdmin ? <PrivNavbar /> : <PubNavbar />}
             <Switch>
               <Route exact path="/" component={Landing} />
               <Route exact path="/about" component={About} />
@@ -72,7 +67,6 @@ class App extends Component {
               <Route exact path="/forbidden" component={Forbidden} />
               <Route component={NotFound} />
             </Switch>
-            {isAdmin ? null : <Footer />}
           </div>
         </Router>
       </Provider>

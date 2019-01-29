@@ -6,6 +6,8 @@ import isEmpty from "../../../validation/is-empty";
 
 import Spinner from "../../common/Spinner";
 import ServerFault from "../../errors/ServerFault";
+import PubNavbar from "../layout/PubNavbar";
+import Footer from "../layout/Footer";
 
 class About extends Component {
   componentDidMount() {
@@ -52,9 +54,13 @@ class About extends Component {
     }
 
     return (
-      <div className="container border border-dark">
-        {title}
-        {body}
+      <div>
+        <PubNavbar />
+        <div className="container border border-dark">
+          {title}
+          {body}
+        </div>
+        <Footer />
       </div>
     );
   }

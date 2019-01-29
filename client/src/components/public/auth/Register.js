@@ -8,6 +8,8 @@ import { formValueSelector } from "redux-form";
 //To use Redux, you must connect a component to app state
 import { connect } from "react-redux";
 import { registerUser } from "../../../actions/authActions";
+import PubNavbar from "../layout/PubNavbar";
+import Footer from "../layout/Footer";
 const selector = formValueSelector("TFGData");
 
 class Register extends Component {
@@ -46,6 +48,7 @@ class Register extends Component {
   render() {
     return (
       <div className="register">
+        <PubNavbar />
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -83,6 +86,7 @@ class Register extends Component {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

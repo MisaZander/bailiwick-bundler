@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import { loginUser } from "../../../actions/authActions";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import { formValueSelector } from "redux-form";
+import PubNavbar from "../layout/PubNavbar";
+import Footer from "../layout/Footer";
 const selector = formValueSelector("TFGData");
 
 class Login extends Component {
@@ -44,6 +46,7 @@ class Login extends Component {
   render() {
     return (
       <div className="login">
+        <PubNavbar />
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -73,6 +76,7 @@ class Login extends Component {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

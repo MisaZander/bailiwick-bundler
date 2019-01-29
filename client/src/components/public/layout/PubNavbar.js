@@ -22,6 +22,13 @@ class PubNavbar extends Component {
               {user.name}
             </Link>
           </li>
+          {user.userlevel > 0 ? (
+            <li className="nav-item">
+              <Link className="nav-link" to="/admin">
+                Control Panel
+              </Link>
+            </li>
+          ) : null}
           <li className="nav-item">
             <a className="nav-link" href="\#" onClick={this.onLogoutClick}>
               Logout
