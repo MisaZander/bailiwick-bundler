@@ -7,7 +7,8 @@ import {
   CLEAR_ERRORS,
   SET_CURRENT_USER,
   GET_CURRENT_USER,
-  LOADING
+  LOADING,
+  POPULATE
 } from "./types";
 
 //Register user
@@ -64,6 +65,10 @@ export const getCurrentUser = () => dispatch => {
     .then(response => {
       dispatch({
         type: GET_CURRENT_USER,
+        payload: response.data
+      });
+      dispatch({
+        type: POPULATE,
         payload: response.data
       });
     })

@@ -33,8 +33,6 @@ class Profile extends Component {
 
   //TODO: Start here and render the profile
   render() {
-    const { errors } = this.props;
-    console.log("Render!");
     return (
       <div className="container">
         <div className="row">
@@ -45,14 +43,12 @@ class Profile extends Component {
                 label="Name"
                 name="name"
                 placeholder="Your Name..."
-                error={errors.name}
               />
               <TextFieldGroup
                 label="Email"
                 name="email"
                 type="email"
                 placeholder="Your email..."
-                error={errors.email}
               />
               <hr className="my-3" />
               <h4>
@@ -64,14 +60,12 @@ class Profile extends Component {
                 name="password"
                 type="password"
                 placeholder="Enter new password..."
-                error={errors.password}
                 info="New password must be between 5-30 characters"
               />
               <TextFieldGroup
                 name="passwordVerify"
                 type="password"
                 placeholder="Enter password again..."
-                error={errors.passwordVerify}
                 label="Enter Same Password:"
               />
               <button
@@ -91,19 +85,17 @@ class Profile extends Component {
 Profile.propTypes = {
   getCurrentUser: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
 
+//Store all the Redux states in props
 export default connect(
-  state => {
-    const formValues = {
-      name: selector(state, "name"),
-      email: selector(state, "email"),
-      password: selector(state, "password"),
-      passwordVerify: selector(state, "passwordVerify")
-    };
-    return formValues;
-  },
+  state => ({
+    auth: state.auth,
+    name: selector(state, "name"),
+    email: selector(state, "email"),
+    password: selector(state, "password"),
+    passwordVerify: selector(state, "passwordVerify")
+  }),
   { getCurrentUser, updateUser }
 )(Profile);

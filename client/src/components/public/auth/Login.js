@@ -29,7 +29,7 @@ class Login extends Component {
     }
   }
 
-  onSubmit = e => {
+  onSubmit = () => {
     //Set by redux-form
     const { email, password } = this.props;
 
