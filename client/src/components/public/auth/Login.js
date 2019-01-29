@@ -21,8 +21,6 @@ class Login extends Component {
   };
 
   render() {
-    const { errors } = this.props;
-    console.log(errors);
     return (
       <div className="login">
         <div className="container">
@@ -35,14 +33,12 @@ class Login extends Component {
                   name="email"
                   type="email"
                   placeholder="Enter your email..."
-                  error={errors.email}
                   label="Enter Email:"
                 />
                 <TextFieldGroup
                   name="password"
                   type="password"
                   placeholder="Enter password..."
-                  error={errors.password}
                   label="Enter Password:"
                 />
                 <button
@@ -63,8 +59,7 @@ class Login extends Component {
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
 
 //Redux-form values will be written to props
@@ -73,7 +68,6 @@ Login.propTypes = {
 export default connect(
   state => ({
     auth: state.auth,
-    errors: state.errors,
     email: selector(state, "email"),
     password: selector(state, "password")
   }),
