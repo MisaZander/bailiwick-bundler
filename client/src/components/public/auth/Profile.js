@@ -18,17 +18,17 @@ class Profile extends Component {
     e.preventDefault();
     //console.log("There was an attempt");
     const newDeets = {
-      name: this.state.name,
-      email: this.state.email,
-      password: !isEmpty(this.state.password) ? this.state.password : "",
-      passwordVerify: !isEmpty(this.state.passwordVerify)
-        ? this.state.passwordVerify
+      name: this.props.name,
+      email: this.props.email,
+      password: !isEmpty(this.props.password) ? this.props.password : "",
+      passwordVerify: !isEmpty(this.props.passwordVerify)
+        ? this.props.passwordVerify
         : ""
     };
 
-    this.props.updateUser(newDeets);
+    this.props.updateUser(newDeets); //async call. Put NOTHING after it
     // this.setState({ password: "", passwordVerify: "" });
-    alert("Profile updated!");
+    //alert("Profile updated!");
   };
 
   //TODO: Start here and render the profile

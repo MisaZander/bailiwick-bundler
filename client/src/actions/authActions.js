@@ -8,7 +8,8 @@ import {
   SET_CURRENT_USER,
   GET_CURRENT_USER,
   LOADING,
-  POPULATE
+  POPULATE,
+  CLEAR_PASSWORD
 } from "./types";
 
 //Register user
@@ -41,6 +42,7 @@ export const loginUser = userData => dispatch => {
       dispatch(setCurrentUser(decodedToken));
     })
     .catch(err => {
+      dispatch(clearErrors());
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -71,9 +73,11 @@ export const getCurrentUser = () => dispatch => {
         type: POPULATE,
         payload: response.data
       });
+      dispatch(clearErrors());
     })
     .catch(err => {
       console.log(err);
+      dispatch(clearErrors());
       dispatch({
         type: GET_CURRENT_USER,
         payload: {}
@@ -90,8 +94,13 @@ export const updateUser = newDeets => dispatch => {
         type: GET_CURRENT_USER,
         payload: response.data
       });
+      dispatch({
+        type: CLEAR_PASSWORD
+      });
+      dispatch(clearErrors());
     })
     .catch(err => {
+      dispatch(clearErrors());
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
