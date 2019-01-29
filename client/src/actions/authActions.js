@@ -39,12 +39,12 @@ export const loginUser = userData => dispatch => {
       dispatch(clearErrors());
       dispatch(setCurrentUser(decodedToken));
     })
-    .catch(err =>
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 //Dispatch current user to superstate

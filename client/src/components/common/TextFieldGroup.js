@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 //import isEmpty from "../../validation/is-empty";
-const error = value => (value ? value : undefined);
+//const error = value => (value ? value : undefined);
 
 //I am a functional component. I don't directly alter state
 let TextFieldGroup = props => {
@@ -13,7 +13,7 @@ let TextFieldGroup = props => {
       type={props.type}
       name={props.name}
       component={customInput}
-      validate={error}
+      //validate={error}
       {...{ props }}
     />
   );
@@ -24,15 +24,12 @@ const customInput = props => {
     <div className="form-group">
       {props.label && <label htmlFor={props.name}>{props.label}</label>}
       <input
+        {...props.input}
         type={props.type}
         className={classnames("form-control form-control-lg", {
           "is-invalid": props.errors[props.name]
         })}
         placeholder={props.placeholder}
-        name={props.name}
-        value={props.value}
-        onChange={props.onChange}
-        disabled={props.disabled}
       />
       {props.info && (
         <small className="form-text text-muted">{props.info}</small>

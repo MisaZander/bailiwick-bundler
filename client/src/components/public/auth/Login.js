@@ -2,12 +2,33 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { loginUser } from "../../../actions/authActions";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import { formValueSelector } from "redux-form";
 const selector = formValueSelector("TFGData");
 
 class Login extends Component {
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      //But you're logged in, why do you want to be here?
+      this.props.history.push("/");
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // console.log("Update!");
+    // console.log("Previous props");
+    // console.log(prevProps);
+    // console.log("Current props");
+    // console.log(this.props);
+
+    //On successful login, this will kick the user back home
+    if (prevProps.auth.isAuthenticated !== this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
+
   onSubmit = e => {
     //Set by redux-form
     const { email, password } = this.props;
@@ -72,4 +93,4 @@ export default connect(
     password: selector(state, "password")
   }),
   { loginUser }
-)(Login);
+)(withRouter(Login));
