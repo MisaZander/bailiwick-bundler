@@ -8,6 +8,9 @@ export const getContent = page => dispatch => {
   dispatch(setLoading());
   let apiLink;
   switch (page) {
+    case "about":
+      apiLink = "/api/content/about";
+      break;
     default:
       apiLink = "/api/content"; //Landing
       break;

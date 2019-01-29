@@ -10,9 +10,21 @@ const AboutSchema = new Schema({
   title: {
     type: String
   },
-  body: {
-    type: String
-  }
+  data: [
+    {
+      texttype: {
+        type: String
+      },
+      text: {
+        type: String
+      },
+      key: {
+        type: Number,
+        required: true,
+        unique: true
+      }
+    }
+  ]
 });
 
 module.exports = About = mongoose.model("About", AboutSchema);
