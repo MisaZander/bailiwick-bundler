@@ -19,7 +19,7 @@ class About extends Component {
     if (isEmpty(content) || isLoading) {
       title = <Spinner />;
     } else {
-      if (!isEmpty(content) && isLoading) {
+      if (!isEmpty(content) && !isLoading) {
         //If wrong document returned
         if (content[0].contentName !== "about") {
           return <ServerFault />;
@@ -28,10 +28,19 @@ class About extends Component {
         if (!isEmpty(content[0].title)) {
           title = <h1 className="display-4 text-center">{content[0].title}</h1>;
         }
-        //Same deal with body
-        if (!isEmpty(content[0].body)) {
-          body = <p className="lead">{content[0].body}</p>;
-        }
+        //TODO: Render data array
+        body = content[0].data.map(element => {
+          if (element.texttype === "headline") {
+            return <h3 key={element.key}>{element.text}</h3>;
+          } else if (element.texttype === "body") {
+            return (
+              <p className="lead" key={element.key}>
+                {element.text}
+              </p>
+            );
+          }
+          return null;
+        });
       } else {
         //Request site owner generate some content
         title = (
