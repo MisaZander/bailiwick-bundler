@@ -18,9 +18,17 @@ class Register extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    //On successful login, this will kick the user back home
+    if (prevProps.auth.isAuthenticated !== this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
+
   onSubmit = e => {
     e.preventDefault();
 
+    //Props lovingly provided by redux-form superstate
     const { name, email, password, passwordVerify } = this.props;
 
     const newUser = {
@@ -32,11 +40,10 @@ class Register extends Component {
 
     //Reducer action we bring in will be stored in props
     this.props.registerUser(newUser, this.props.history); //Call registerUser in ../../actions/authActions
+    //Above call is async. Do not write anything else here
   };
 
   render() {
-    const { errors } = this.props;
-
     return (
       <div className="register">
         <div className="container">
@@ -49,14 +56,12 @@ class Register extends Component {
                   name="name"
                   type="name"
                   placeholder="Enter your name..."
-                  error={errors.name}
                   label="Enter Name:"
                 />
                 <TextFieldGroup
                   name="email"
                   type="email"
                   placeholder="Enter your email..."
-                  error={errors.email}
                   label="Enter Email:"
                   info="Your email address may be sold to the highest bidder from a South American country"
                 />
@@ -64,7 +69,6 @@ class Register extends Component {
                   name="password"
                   type="password"
                   placeholder="Enter password..."
-                  error={errors.password}
                   label="Enter Password:"
                   info="Password should be between 5-30 characters. We don't enforce strong ones yet."
                 />
@@ -72,7 +76,6 @@ class Register extends Component {
                   name="passwordVerify"
                   type="password"
                   placeholder="Enter password again..."
-                  error={errors.passwordVerify}
                   label="Enter Same Password:"
                 />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
@@ -87,19 +90,16 @@ class Register extends Component {
 
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
 
 export default connect(
-  state => {
-    const formValues = {
-      name: selector(state, "name"),
-      email: selector(state, "email"),
-      password: selector(state, "password"),
-      passwordVerify: selector(state, "passwordVerify")
-    };
-    return formValues;
-  },
+  state => ({
+    auth: state.auth,
+    name: selector(state, "name"),
+    email: selector(state, "email"),
+    password: selector(state, "password"),
+    passwordVerify: selector(state, "passwordVerify")
+  }),
   { registerUser }
 )(withRouter(Register));
