@@ -12,6 +12,11 @@ class PrivNavbar extends Component {
           </Link>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
+              <Link className="nav-link" to="/admin">
+                Admin Home
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link" to="/admin/misc">
                 Content Manager
               </Link>
