@@ -27,4 +27,4 @@ const AboutSchema = new Schema({
   ]
 });
 
-module.exports = About = mongoose.model("About", AboutSchema);
+module.exports = About = mongoose.model("About", AboutSchema, "contents");

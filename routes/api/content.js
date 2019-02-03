@@ -9,7 +9,7 @@ const passport = require("passport");
 //@access Public
 router.get("/", (req, res) => {
   const errors = {};
-  Landing.find().exec((err, landing) => {
+  Landing.find({ contentName: "landing" }).exec((err, landing) => {
     if (err) {
       errors.err = err;
       return res.status(404).json(errors);
@@ -60,7 +60,7 @@ router.post(
 //@access Public
 router.get("/about", (req, res) => {
   const errors = {};
-  About.find().exec((err, about) => {
+  About.find({ contentName: "about" }).exec((err, about) => {
     if (err) {
       errors.err = err;
       return res.status(404).json(errors);

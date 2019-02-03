@@ -57,4 +57,4 @@ const LandingSchema = new Schema({
   ]
 });
 
-module.exports = Landing = mongoose.model("Landing", LandingSchema);
+module.exports = Landing = mongoose.model("Landing", LandingSchema, "contents");
