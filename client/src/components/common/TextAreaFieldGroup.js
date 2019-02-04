@@ -1,31 +1,42 @@
 import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { Field, reduxForm } from "redux-form";
 
 //I am a functional component. I don't directly alter state
-const TextAreaFieldGroup = ({
-  label,
-  name,
-  placeholder,
-  value,
-  error,
-  info,
-  onChange
-}) => {
+let TextAreaFieldGroup = props => {
+  return (
+    <Field
+      type="textarea"
+      name={props.name}
+      component={customInput}
+      {...{ props }}
+    />
+  );
+};
+
+const customInput = props => {
   return (
     <div className="form-group">
-      {label && <label htmlFor={name}>{label}</label>}
+      {props.label && <label htmlFor={props.name}>{props.label}</label>}
       <textarea
+        {...props.input}
         className={classnames("form-control form-control-lg", {
-          "is-invalid": error
+          "is-invalid": props.errors[props.name]
         })}
-        placeholder={placeholder}
-        name={name}
-        value={value}
-        onChange={onChange}
+        placeholder={props.placeholder}
+        name={props.name}
+        rows="10"
+        cols="40"
       />
-      {info && <small className="form-text text-muted">{info}</small>}
-      {error && <div className="invalid-feedback">{error}</div>}
+      {props.info && (
+        <small className="form-text text-muted">{props.info}</small>
+      )}
+      {props.errors[props.name] && (
+        <div className="invalid-feedback">{props.errors[props.name]}</div>
+      )}
     </div>
   );
 };
@@ -34,10 +45,18 @@ TextAreaFieldGroup.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
   info: PropTypes.string,
-  error: PropTypes.string,
-  onChange: PropTypes.func.isRequired
+  error: PropTypes.string
 };
 
-export default TextAreaFieldGroup;
+TextAreaFieldGroup = reduxForm({
+  form: "TAFGdata",
+  enableReinitialize: true
+})(TextAreaFieldGroup);
+
+export default connect(
+  state => ({
+    errors: state.errors
+  }),
+  null
+)(TextAreaFieldGroup);

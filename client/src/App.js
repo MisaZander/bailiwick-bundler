@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import About from "./components/public/about/About";
 import Landing from "./components/public/landing/Landing";
 import Gallery from "./components/public/gallery/Gallery";
-import Form from "./components/public/contact/Form";
+import Contact from "./components/public/contact/Contact";
 import Register from "./components/public/auth/Register";
 import Login from "./components/public/auth/Login";
 import Profile from "./components/public/auth/Profile";
@@ -49,7 +49,7 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/about" component={About} />
               <Route exact path="/gallery" component={Gallery} />
-              <Route exact path="/contact/form" component={Form} />
+              <Route exact path="/contact" component={Contact} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <PrivateRoute
