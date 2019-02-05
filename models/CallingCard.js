@@ -7,9 +7,15 @@ const CallingCardSchema = new Schema({
     required: true,
     unique: true
   },
-  name: String,
-  email: String,
-  phone: String
+  name: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  phone: {
+    type: String
+  }
 });
 
 module.exports = CallingCard = mongoose.model(

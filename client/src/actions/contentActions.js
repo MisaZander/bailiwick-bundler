@@ -11,6 +11,9 @@ export const getContent = page => dispatch => {
     case "about":
       apiLink = "/api/content/about";
       break;
+    case "contact":
+      apiLink = "/api/content/contact";
+      break;
     default:
       apiLink = "/api/content"; //Landing
       break;

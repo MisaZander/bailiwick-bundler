@@ -1,5 +1,7 @@
 module.exports = {
   About: require("./About"),
   Landing: require("./Landing"),
-  User: require("./User")
+  User: require("./User"),
+  CallingCard: require("./CallingCard"),
+  Setting: require("./Setting")
 };

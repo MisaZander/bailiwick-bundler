@@ -20,7 +20,6 @@ const AboutSchema = new Schema({
       },
       key: {
         type: Number,
-        required: true,
         unique: true
       }
     }

@@ -70,7 +70,7 @@ class PubNavbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/contact/form">
+              <Link className="nav-link" to="/contact">
                 Contact
               </Link>
             </li>
