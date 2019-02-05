@@ -17,7 +17,7 @@ class Form extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form className="container" onSubmit={this.onSubmit}>
         <div className="form-group">
           <TextFieldGroup
             label="Name:"

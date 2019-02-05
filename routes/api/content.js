@@ -77,8 +77,15 @@ router.get("/contact", (req, res) => {
           errors.err = err2;
           return res.status(404).json(errors);
         }
-        let newDeets = deets;
-        newDeets.mode = "Calling Card";
+        let { name, email, phone } = deets[0];
+        let newDeets = {
+          mode: "Calling Card",
+          name,
+          email,
+          phone
+        };
+        //console.log(typeof newDeets);
+        console.log(newDeets);
         return res.status(200).json(newDeets);
       }); //Calling Card find()
     } else if (preference === "Anonymous Form") {

@@ -9,6 +9,7 @@ import isEmpty from "../../../validation/is-empty";
 
 //import ServerFault from "../../errors/ServerFault";
 import Spinner from "../../common/Spinner";
+import CallingCard from "./CallingCard";
 
 class Contact extends Component {
   componentDidMount() {
@@ -23,8 +24,8 @@ class Contact extends Component {
     } else {
       if (!isEmpty(content) && !isLoading) {
         //Conditially render calling card or form here
-        if (content[0].mode === "Calling Card") {
-          //TODO: create a CallingCard component
+        if (content.mode === "Calling Card") {
+          renderables = <CallingCard deets={content} />;
         } else if (content[0].mode === "Anonymous Form") {
           renderables = <Form />;
         }
@@ -40,7 +41,7 @@ class Contact extends Component {
     return (
       <div className="contact-form">
         <PubNavbar />
-        <div className="container border border-dark">{renderables}</div>
+        <div>{renderables}</div>
         <Footer />
       </div>
     );
