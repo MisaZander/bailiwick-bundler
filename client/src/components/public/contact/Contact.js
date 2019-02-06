@@ -24,8 +24,8 @@ class Contact extends Component {
     } else {
       if (!isEmpty(content) && !isLoading) {
         //Conditially render calling card or form here
-        if (content.mode === "Calling Card") {
-          renderables = <CallingCard deets={content} />;
+        if (content[0].mode === "Calling Card") {
+          renderables = <CallingCard deets={content[0]} />;
         } else if (content[0].mode === "Anonymous Form") {
           renderables = <Form />;
         }

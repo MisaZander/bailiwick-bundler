@@ -71,26 +71,29 @@ router.get("/contact", (req, res) => {
     //Calling Card or Form?
     let preference = settingRes[0].contact.selected;
     if (preference === "Calling Card") {
-      CallingCard.find({ contentName: "callingcard" }).exec((err2, deets) => {
+      CallingCard.find({ contentName: "contact" }).exec((err2, deets) => {
         if (err2) {
           console.log(err2);
           errors.err = err2;
           return res.status(404).json(errors);
         }
-        let { name, email, phone } = deets[0];
-        let newDeets = {
+        let { contentName, name, email, phone } = deets[0];
+        let newDeetsObj = {
           mode: "Calling Card",
+          contentName,
           name,
           email,
           phone
         };
-        //console.log(typeof newDeets);
-        console.log(newDeets);
-        return res.status(200).json(newDeets);
+        let newDeets = [];
+        newDeets.push(newDeetsObj); //All front end handlers expect an array response
+        return res.status(200).send(newDeets);
       }); //Calling Card find()
     } else if (preference === "Anonymous Form") {
-      let response = { mode: "Anonymous Form" };
-      return res.status(200).json(response);
+      let responseObj = { contentName: "contact", mode: "Anonymous Form" };
+      let response = [];
+      response.push(responseObj);
+      return res.status(200).send(response);
     }
   }); // Setting find
 });
