@@ -11,6 +11,7 @@ import Register from "./components/public/auth/Register";
 import Login from "./components/public/auth/Login";
 import Profile from "./components/public/auth/Profile";
 import AdminLanding from "./components/private/landing/AdminLanding";
+import AlterAbout from "./components/private/misc/AlterAbout";
 
 //Loggin actions
 import jwt_decode from "jwt-decode";
@@ -54,15 +55,21 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <PrivateRoute
                 exact
+                path="/profile"
+                minlevel={0}
+                component={Profile}
+              />
+              <PrivateRoute
+                exact
                 path="/admin"
                 minlevel={1}
                 component={AdminLanding}
               />
               <PrivateRoute
                 exact
-                path="/profile"
-                minlevel={0}
-                component={Profile}
+                path="/admin/misc/about"
+                minlevel={1}
+                component={AlterAbout}
               />
               <Route exact path="/forbidden" component={Forbidden} />
               <Route component={NotFound} />
