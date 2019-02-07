@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { formValueSelector, FieldArray, reduxForm } from "redux-form";
+import { formValueSelector, reduxForm } from "redux-form";
 
 import { getContent } from "../../../actions/contentActions";
 import isEmpty from "../../../validation/is-empty";
@@ -39,7 +39,36 @@ class AlterAbout extends Component {
         renderables = (
           <form>
             <h1 className="display-4 text-center">About You</h1>
-            {renderForm(content[0])}
+            <TextFieldGroup
+              name="title"
+              type="text"
+              placeholder="Enter a title for this page..."
+              label="Page Title"
+            />
+            <hr className="my-3" />
+            {content[0].data.map(datapoint => {
+              if (datapoint.texttype === "headline") {
+                return (
+                  <TextFieldGroup
+                    key={datapoint.key}
+                    name={"h" + datapoint.key}
+                    type="text"
+                    placeholder="Enter a headline"
+                    label="Headline:"
+                  />
+                );
+              } else if (datapoint.texttype === "body") {
+                return (
+                  <TextAreaFieldGroup
+                    key={datapoint.key}
+                    name={"b" + datapoint.key}
+                    placeholder="Enter body text..."
+                    label="Body Paragraph:"
+                  />
+                );
+              }
+              return null;
+            })}
             {/* Add submit button */}
           </form>
         );
@@ -54,52 +83,6 @@ class AlterAbout extends Component {
     );
   }
 }
-
-const renderForm = fields => {
-  return (
-    <div>
-      <TextFieldGroup
-        name="title"
-        type="text"
-        placeholder="Enter a title for this page..."
-        label="Page Title"
-      />
-      <hr className="my-3" />
-      {fields.data.map(datapoint => {
-        if (datapoint.texttype === "headline") {
-          return (
-            <TextFieldGroup
-              key={datapoint.key}
-              name={"h" + datapoint.key}
-              type="text"
-              placeholder="Enter a headline"
-              label="Headline:"
-            />
-          );
-        } else if (datapoint.texttype === "body") {
-          return (
-            <TextAreaFieldGroup
-              key={datapoint.key}
-              name={"b" + datapoint.key}
-              placeholder="Enter body text..."
-              label="Body Paragraph:"
-            />
-          );
-        }
-        return null;
-      })}
-    </div>
-  );
-};
-
-// content[0].data.map(element => {
-//   if(element.texttype === "headline") {
-//     return <TextFieldGroup key={element.key} name={"h" + element.key} type="text" placeholder="Enter a headline" label="Headline:" />;
-//   } else if (element.texttype === "body") {
-//     return <TextAreaFieldGroup key={element.key} name={"b" + element.key} placeholder="Enter body text..." label="Body Paragraph:" />;
-//   }
-//   return null;
-// });
 
 AlterAbout.propTypes = {
   auth: PropTypes.object.isRequired,
