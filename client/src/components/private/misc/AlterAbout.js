@@ -39,17 +39,7 @@ class AlterAbout extends Component {
         renderables = (
           <form>
             <h1 className="display-4 text-center">About You</h1>
-            <TextFieldGroup
-              name="title"
-              type="text"
-              placeholder="Enter a title for this page..."
-              label="Page Title"
-            />
-            <FieldArray
-              name="about"
-              component={renderForm}
-              data={content[0].data}
-            />
+            {renderForm(content[0])}
             {/* Add submit button */}
           </form>
         );
@@ -66,30 +56,40 @@ class AlterAbout extends Component {
 }
 
 const renderForm = fields => {
-  console.log(fields);
-  return fields.data.map(datapoint => {
-    if (datapoint.texttype === "headline") {
-      return (
-        <TextFieldGroup
-          key={datapoint.key}
-          name={"h" + datapoint.key}
-          type="text"
-          placeholder="Enter a headline"
-          label="Headline:"
-        />
-      );
-    } else if (datapoint.texttype === "body") {
-      return (
-        <TextAreaFieldGroup
-          key={datapoint.key}
-          name={"b" + datapoint.key}
-          placeholder="Enter body text..."
-          label="Body Paragraph:"
-        />
-      );
-    }
-    return null;
-  });
+  return (
+    <div>
+      <TextFieldGroup
+        name="title"
+        type="text"
+        placeholder="Enter a title for this page..."
+        label="Page Title"
+      />
+      <hr className="my-3" />
+      {fields.data.map(datapoint => {
+        if (datapoint.texttype === "headline") {
+          return (
+            <TextFieldGroup
+              key={datapoint.key}
+              name={"h" + datapoint.key}
+              type="text"
+              placeholder="Enter a headline"
+              label="Headline:"
+            />
+          );
+        } else if (datapoint.texttype === "body") {
+          return (
+            <TextAreaFieldGroup
+              key={datapoint.key}
+              name={"b" + datapoint.key}
+              placeholder="Enter body text..."
+              label="Body Paragraph:"
+            />
+          );
+        }
+        return null;
+      })}
+    </div>
+  );
 };
 
 // content[0].data.map(element => {

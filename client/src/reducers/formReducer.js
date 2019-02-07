@@ -4,7 +4,7 @@ import { POPULATE, CLEAR_PASSWORD } from "../actions/types";
 const initialState = {};
 
 export default formReducer.plugin({
-  TFGData: (state = initialState, action) => {
+  formData: (state = initialState, action) => {
     // <--- name of form
     switch (action.type) {
       case POPULATE:

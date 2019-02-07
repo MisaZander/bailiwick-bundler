@@ -8,7 +8,7 @@ import TextFieldGroup from "../../common/TextFieldGroup";
 import { formValueSelector } from "redux-form";
 import PubNavbar from "../layout/PubNavbar";
 import Footer from "../layout/Footer";
-const selector = formValueSelector("TFGData");
+const selector = formValueSelector("formData");
 
 class Login extends Component {
   componentDidMount() {

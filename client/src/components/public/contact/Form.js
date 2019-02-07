@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { formValueSelector } from "redux-form";
 
-const inputSelector = formValueSelector("TFGData");
-const areaSelector = formValueSelector("TAFGData");
+const inputSelector = formValueSelector("formData");
+const areaSelector = formValueSelector("formData");
 
 class Form extends Component {
   componentWillMount() {}

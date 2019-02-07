@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { registerUser } from "../../../actions/authActions";
 import PubNavbar from "../layout/PubNavbar";
 import Footer from "../layout/Footer";
-const selector = formValueSelector("TFGData");
+const selector = formValueSelector("formData");
 
 class Register extends Component {
   componentDidMount() {

@@ -50,7 +50,7 @@ TextAreaFieldGroup.propTypes = {
 };
 
 TextAreaFieldGroup = reduxForm({
-  form: "TAFGdata",
+  form: "formData",
   enableReinitialize: true
 })(TextAreaFieldGroup);
 

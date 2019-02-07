@@ -9,7 +9,7 @@ import isEmpty from "../../../validation/is-empty";
 import { getCurrentUser, updateUser } from "../../../actions/authActions";
 import PubNavbar from "../layout/PubNavbar";
 import Footer from "../layout/Footer";
-const selector = formValueSelector("TFGData");
+const selector = formValueSelector("formData");
 
 class Profile extends Component {
   componentDidMount() {

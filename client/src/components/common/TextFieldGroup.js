@@ -56,7 +56,7 @@ TextFieldGroup.defaultProps = {
 
 //Export currently typed data to the Redux state
 TextFieldGroup = reduxForm({
-  form: "TFGData",
+  form: "formData",
   enableReinitialize: true
 })(TextFieldGroup);
 
