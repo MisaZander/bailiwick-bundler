@@ -1,10 +1,17 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const AboutSchema = new Schema({
+const ContactSchema = new Schema({
   contentname: {
     type: String,
     required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now()
+  },
+  mode: {
+    type: String
   },
   title: {
     type: String,
@@ -12,6 +19,12 @@ const AboutSchema = new Schema({
   },
   data: [
     {
+      ahref: {
+        type: String
+      },
+      aval: {
+        type: String
+      },
       fieldname: {
         type: String,
         required: true
@@ -31,4 +44,4 @@ const AboutSchema = new Schema({
   ]
 });
 
-module.exports = About = mongoose.model("About", AboutSchema, "contents");
+module.exports = Contact = mongoose.model("contact", ContactSchema, "contents");

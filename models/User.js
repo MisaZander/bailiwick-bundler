@@ -25,7 +25,18 @@ const UserSchema = new Schema({
     default: 0,
     get: v => Math.floor(v),
     set: v => Math.floor(v)
-  }
+  },
+  notes: [
+    {
+      text: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now()
+      }
+    }
+  ]
 });
 
 module.exports = User = mongoose.model("User", UserSchema);
