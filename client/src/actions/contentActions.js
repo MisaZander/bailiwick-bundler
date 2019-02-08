@@ -2,6 +2,7 @@
 import axios from "axios";
 
 import { GET_CONTENT, LOADING, POPULATE } from "./types";
+import isEmpty from "../validation/is-empty";
 
 //Get content for a page
 export const getContent = page => dispatch => {
@@ -22,20 +23,22 @@ export const getContent = page => dispatch => {
   axios
     .get(apiLink)
     .then(response => {
-      console.log(response.data);
+      //console.log(response.data);
       dispatch({
         type: GET_CONTENT,
         payload: response.data
       });
-      let formData = {};
-      response.data[0].data.forEach(element => {
-        formData[element.name] = element.text;
-      });
-      formData.title = response.data[0].title;
-      dispatch({
-        type: POPULATE,
-        payload: formData
-      });
+      if (!isEmpty(response.data[0].data)) {
+        let formData = {};
+        response.data[0].data.forEach(element => {
+          formData[element.name] = element.text;
+        });
+        formData.title = response.data[0].title;
+        dispatch({
+          type: POPULATE,
+          payload: formData
+        });
+      }
     })
     .catch(err => {
       console.log(err);

@@ -1,3 +1,4 @@
+// ./client/src/components/private/misc/AlterAbout.js
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -18,9 +19,15 @@ class AlterAbout extends Component {
     this.props.getContent("about");
   }
 
-  addField = type => {};
+  addField = type => {
+    //This should tack on a new field to the DB
+    //.then() should fetch new content
+  };
 
-  spliceField = key => {};
+  spliceField = key => {
+    //This should splice out a document from data
+    //.then() should fetch the new data
+  };
 
   commit = () => {
     //Send state data to backend
@@ -71,9 +78,9 @@ class AlterAbout extends Component {
             })}
             {/* Add submit button */}
           </form>
-        );
-      }
-    }
+        ); //renderables = ()
+      } // if content = about
+    } // if not loading
 
     return (
       <div>
