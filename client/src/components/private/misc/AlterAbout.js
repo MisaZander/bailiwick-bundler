@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { formValueSelector, reduxForm } from "redux-form";
+import { getFormValues, reduxForm } from "redux-form";
 
 import { getContent } from "../../../actions/contentActions";
 import isEmpty from "../../../validation/is-empty";
@@ -10,7 +10,7 @@ import Spinner from "../../common/Spinner";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import TextAreaFieldGroup from "../../common/TextAreaFieldGroup";
 
-//const inputSelector = formValueSelector("TFGData");
+const selector = getFormValues("formData");
 //const areaSelector = formValueSelector("TAFGData");
 
 class AlterAbout extends Component {
@@ -51,7 +51,7 @@ class AlterAbout extends Component {
                 return (
                   <TextFieldGroup
                     key={datapoint.key}
-                    name={"h" + datapoint.key}
+                    name={datapoint.name}
                     type="text"
                     placeholder="Enter a headline"
                     label="Headline:"
@@ -61,7 +61,7 @@ class AlterAbout extends Component {
                 return (
                   <TextAreaFieldGroup
                     key={datapoint.key}
-                    name={"b" + datapoint.key}
+                    name={datapoint.name}
                     placeholder="Enter body text..."
                     label="Body Paragraph:"
                   />
@@ -97,7 +97,8 @@ AlterAbout = reduxForm({
 export default connect(
   state => ({
     auth: state.auth,
-    content: state.content
+    content: state.content,
+    data: selector(state)
   }),
   { getContent }
 )(AlterAbout);

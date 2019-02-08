@@ -21,6 +21,9 @@ const AboutSchema = new Schema({
       key: {
         type: Number,
         unique: true
+      },
+      name: {
+        type: String
       }
     }
   ]
