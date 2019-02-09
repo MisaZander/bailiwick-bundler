@@ -4,6 +4,12 @@ const CallingCard = props => {
   return (
     <div className="container card card-body">
       <div className="row">
+        <div className="col">
+          <h1 className="display-4">{props.deets.title}</h1>
+          <hr className="my-4" />
+        </div>
+      </div>
+      <div className="row">
         <div className="col-3 text-center">
           <img
             src={require("../../../img/gallery/" + props.deets.image)}
