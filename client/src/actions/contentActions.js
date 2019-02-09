@@ -31,7 +31,7 @@ export const getContent = page => dispatch => {
       if (!isEmpty(response.data[0].data)) {
         let formData = {};
         response.data[0].data.forEach(element => {
-          formData[element.name] = element.text;
+          formData[element.fieldname] = element.text;
         });
         formData.title = response.data[0].title;
         dispatch({
