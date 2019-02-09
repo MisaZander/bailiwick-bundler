@@ -2,6 +2,6 @@ module.exports = {
   About: require("./About"),
   Landing: require("./Landing"),
   User: require("./User"),
-  CallingCard: require("./CallingCard"),
+  Contact: require("./Contact"),
   Setting: require("./Setting")
 };

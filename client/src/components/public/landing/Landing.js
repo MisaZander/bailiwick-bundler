@@ -1,3 +1,4 @@
+// ./client/src/components/public/landing/Landing.js
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -19,7 +20,7 @@ class Landing extends Component {
 
   render() {
     const { content, isLoading } = this.props.content;
-    let title, blurbs, finale;
+    let title, calltoaction, blurbs, finale;
     if (isEmpty(content) || isLoading) {
       //console.log("Adjust keep spinning spinning spinning...");
       title = <Spinner />;
@@ -31,18 +32,28 @@ class Landing extends Component {
           return <ServerFault />;
         }
         if (!isEmpty(content[0].title)) {
-          //console.log("Rendering header");
           title = <h1 className="display-4 text-center">{content[0].title}</h1>;
         }
-        //console.log("Assigning blurbs");
-        blurbs = content[0].blurbs.map((blurb, index) => {
+        if (!isEmpty(content[0].calltoaction)) {
+          calltoaction = content[0].calltoaction;
+        } else {
+          calltoaction = "";
+        }
+        let blurbData = content[0].data.filter(
+          datapoint => datapoint.texttype === "blurb"
+        );
+        blurbs = blurbData.map((blurb, index) => {
           return index % 2 === 0 ? (
-            <Right key={index + 1} blurb={blurb} />
+            <Right key={blurb.key} blurb={blurb} />
           ) : (
-            <Left key={index + 1} blurb={blurb} />
+            <Left key={blurb.key} blurb={blurb} />
           );
         });
-        finale = <Finale finishers={content[0].finishers} />;
+
+        let finaleData = content[0].data.filter(
+          datapoint => datapoint.texttype === "finisher"
+        );
+        finale = <Finale finishers={finaleData} calltoaction={calltoaction} />;
       } else {
         //console.log(content.length);
         title = (

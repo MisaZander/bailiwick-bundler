@@ -38,6 +38,9 @@ const MotherOfAllSchemas = new Schema({
         type: String,
         required: true
       },
+      img: {
+        type: String
+      },
       key: {
         type: Number,
         required: true

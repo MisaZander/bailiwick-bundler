@@ -10,7 +10,7 @@ class Right extends Component {
         <div className="row">
           <div className="col-6">
             <h3 className="text-center">{blurb.title}</h3>
-            <p className="lead text-center">{blurb.body}</p>
+            <p className="lead text-center">{blurb.text}</p>
             <Link to={blurb.ahref}>
               <button type="button" className="btn btn-block btn-info">
                 {blurb.aval}

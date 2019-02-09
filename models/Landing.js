@@ -4,54 +4,45 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const LandingSchema = new Schema({
-  contentName: {
+  contentname: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
-  title: {
+  calltoaction: {
     type: String
   },
-  blurbs: [
+  title: {
+    type: String,
+    required: true
+  },
+  data: [
     {
-      title: {
-        type: String,
-        required: true
-      },
-      body: {
-        type: String,
-        required: true
-      },
       ahref: {
-        type: String,
-        required: true
+        type: String
       },
       aval: {
+        type: String
+      },
+      fieldname: {
         type: String,
         required: true
       },
       img: {
-        type: String,
+        type: String
+      },
+      key: {
+        type: Number,
         required: true
-      }
-    }
-  ],
-  calltoaction: {
-    type: String
-  },
-  finishers: [
-    {
-      body: {
+      },
+      text: {
         type: String,
         required: true
       },
-      ahref: {
-        type: String,
-        required: true
+      texttype: {
+        type: String
       },
-      aval: {
-        type: String,
-        required: true
+      title: {
+        type: String
       }
     }
   ]

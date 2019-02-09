@@ -1,9 +1,10 @@
+// ./routes/api/content.js
 const express = require("express");
 const router = express.Router();
 const Landing = require("../../models/Landing"); //Landing model, with mongoose methods included
 const About = require("../../models/About");
 const Setting = require("../../models/Setting");
-const CallingCard = require("../../models/CallingCard");
+const Contact = require("../../models/Contact");
 const passport = require("passport");
 
 //@route GET /api/content/about
@@ -71,7 +72,7 @@ router.get("/contact", (req, res) => {
     //Calling Card or Form?
     let preference = settingRes[0].contact.selected;
     if (preference === "Calling Card") {
-      CallingCard.find({ contentName: "contact" }).exec((err2, deets) => {
+      Contact.find({ contentName: "contact" }).exec((err2, deets) => {
         if (err2) {
           console.log(err2);
           errors.err = err2;
@@ -116,14 +117,14 @@ router.post(
     //TODO: Call input validator
     const { contentName, name, email, phone } = req.body;
 
-    const newCC = new CallingCard({
+    const newContact = new Contact({
       contentName,
       name,
       email,
       phone
     }); //new CallingCard()
 
-    newCC.save((err, card) => {
+    newContact.save((err, card) => {
       if (err) {
         console.log("Calling Card save error", err);
         errors.err = err;
@@ -165,14 +166,13 @@ router.post(
       return res.status(403).json(errors);
     }
     //TODO: Call input validator
-    const { contentName, title, blurbs, calltoaction, finishers } = req.body;
+    const { contentName, title, calltoaction, data } = req.body;
 
     const newLanding = new Landing({
       contentName,
       title,
-      blurbs,
       calltoaction,
-      finishers
+      data
     }); //new Landing()
 
     newLanding.save((err, landing) => {

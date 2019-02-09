@@ -1,3 +1,4 @@
+// ./client/src/components/public/landing/Left.js
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
@@ -13,7 +14,7 @@ class Left extends Component {
           </div>
           <div className="col-6">
             <h3 className="text-center">{blurb.title}</h3>
-            <p className="lead text-center">{blurb.body}</p>
+            <p className="lead text-center">{blurb.text}</p>
             <Link to={blurb.ahref}>
               <button type="button" className="btn btn-block btn-info">
                 {blurb.aval}
