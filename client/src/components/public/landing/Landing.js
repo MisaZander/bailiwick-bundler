@@ -15,7 +15,7 @@ import ServerFault from "../../errors/ServerFault";
 
 class Landing extends Component {
   componentDidMount() {
-    this.props.getContent("landing");
+    this.props.getContent("landing", false);
   }
 
   render() {

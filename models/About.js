@@ -12,10 +12,6 @@ const AboutSchema = new Schema({
   },
   data: [
     {
-      fieldname: {
-        type: String,
-        required: true
-      },
       key: {
         type: Number,
         required: true

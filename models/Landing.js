@@ -23,10 +23,6 @@ const LandingSchema = new Schema({
       aval: {
         type: String
       },
-      fieldname: {
-        type: String,
-        required: true
-      },
       img: {
         type: String
       },

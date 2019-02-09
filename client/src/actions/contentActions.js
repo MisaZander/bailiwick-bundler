@@ -5,7 +5,7 @@ import { GET_CONTENT, LOADING, CLEAR_FORM, POPULATE } from "./types";
 import isEmpty from "../validation/is-empty";
 
 //Get content for a page
-export const getContent = page => dispatch => {
+export const getContent = (page, dispatchForm = false) => dispatch => {
   dispatch(setLoading());
   let apiLink;
   switch (page) {
@@ -31,12 +31,25 @@ export const getContent = page => dispatch => {
       dispatch({
         type: CLEAR_FORM
       });
-      if (!isEmpty(response.data[0].data)) {
+      if (!isEmpty(response.data[0].data) && dispatchForm) {
         let formData = {};
+        formData.title = isEmpty(response.data[0].title)
+          ? null
+          : response.data[0].title;
+        formData.calltoaction = isEmpty(response.data[0].calltoaction)
+          ? null
+          : response.data[0].calltoaction;
         response.data[0].data.forEach(element => {
-          formData[element.fieldname] = element.text;
+          for (var key in element) {
+            if (element.hasOwnProperty(key)) {
+              if (key === "key" || key === "texttype" || key === "_id") {
+                continue;
+              } else {
+                formData[element.texttype + key + element.key] = element[key];
+              }
+            }
+          }
         });
-        formData.title = response.data[0].title;
         dispatch({
           type: POPULATE,
           payload: formData

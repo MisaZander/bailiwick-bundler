@@ -34,10 +34,6 @@ const MotherOfAllSchemas = new Schema({
       event: {
         type: String
       },
-      fieldname: {
-        type: String,
-        required: true
-      },
       img: {
         type: String
       },

@@ -15,10 +15,9 @@ export default formReducer.plugin({
             ...action.payload
           }
         };
-      case CLEAR_FORM: 
+      case CLEAR_FORM:
         return {
-          ...state,
-          values: {}
+          ...state
         };
       case CLEAR_PASSWORD:
         return {

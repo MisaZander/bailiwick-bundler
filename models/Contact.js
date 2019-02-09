@@ -19,15 +19,15 @@ const ContactSchema = new Schema({
   },
   data: [
     {
-      fieldname: {
-        type: String,
-        required: true
-      },
       key: {
         type: Number,
         required: true
       },
       text: {
+        type: String,
+        required: true
+      },
+      texttype: {
         type: String,
         required: true
       }

@@ -16,7 +16,7 @@ const selector = getFormValues("formData");
 
 class AlterAbout extends Component {
   componentDidMount() {
-    this.props.getContent("about");
+    this.props.getContent("about", true);
   }
 
   addField = type => {
@@ -58,9 +58,9 @@ class AlterAbout extends Component {
                 return (
                   <TextFieldGroup
                     key={datapoint.key}
-                    name={datapoint.name}
+                    name={datapoint.fieldname}
                     type="text"
-                    placeholder="Enter a headline"
+                    placeholder="Enter a headline..."
                     label="Headline:"
                   />
                 );
@@ -68,7 +68,7 @@ class AlterAbout extends Component {
                 return (
                   <TextAreaFieldGroup
                     key={datapoint.key}
-                    name={datapoint.name}
+                    name={datapoint.fieldname}
                     placeholder="Enter body text..."
                     label="Body Paragraph:"
                   />

@@ -11,7 +11,7 @@ import Footer from "../layout/Footer";
 
 class About extends Component {
   componentDidMount() {
-    this.props.getContent("about");
+    this.props.getContent("about", false);
   }
 
   render() {

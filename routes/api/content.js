@@ -85,7 +85,7 @@ router.get("/contact", (req, res) => {
           title
         };
         data.forEach(datapoint => {
-          newDeetsObj[datapoint.fieldname] = datapoint.text;
+          newDeetsObj[datapoint.texttype] = datapoint.text;
         });
         let newDeets = [];
         newDeets.push(newDeetsObj); //All front end handlers expect an array response

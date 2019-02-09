@@ -13,7 +13,7 @@ import CallingCard from "./CallingCard";
 
 class Contact extends Component {
   componentDidMount() {
-    this.props.getContent("contact");
+    this.props.getContent("contact", false);
   }
 
   render() {
@@ -25,6 +25,13 @@ class Contact extends Component {
       if (!isEmpty(content) && !isLoading) {
         //Conditially render calling card or form here
         if (content[0].mode === "Calling Card") {
+          // let deets = content[0].data.forEach(element => {
+          //   for (var key in element) {
+          //     if (element.hasOwnProperty(key)) {
+          //       deets[key] = element[key];
+          //     }
+          //   }
+          // });
           renderables = <CallingCard deets={content[0]} />;
         } else if (content[0].mode === "Anonymous Form") {
           renderables = <Form />;
