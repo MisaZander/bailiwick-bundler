@@ -78,14 +78,15 @@ router.get("/contact", (req, res) => {
           errors.err = err2;
           return res.status(404).json(errors);
         }
-        let { contentName, name, email, phone } = deets[0];
+        let { contentName, title, mode, data } = deets[0];
         let newDeetsObj = {
-          mode: "Calling Card",
+          mode,
           contentName,
-          name,
-          email,
-          phone
+          title
         };
+        data.forEach(datapoint => {
+          newDeetsObj[datapoint.fieldname] = datapoint.text;
+        });
         let newDeets = [];
         newDeets.push(newDeetsObj); //All front end handlers expect an array response
         return res.status(200).send(newDeets);
