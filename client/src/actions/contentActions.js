@@ -1,7 +1,7 @@
 // ./client/src/actions/contentActions.js
 import axios from "axios";
 
-import { GET_CONTENT, LOADING, POPULATE } from "./types";
+import { GET_CONTENT, LOADING, CLEAR_FORM, POPULATE } from "./types";
 import isEmpty from "../validation/is-empty";
 
 //Get content for a page
@@ -27,6 +27,9 @@ export const getContent = page => dispatch => {
       dispatch({
         type: GET_CONTENT,
         payload: response.data
+      });
+      dispatch({
+        type: CLEAR_FORM
       });
       if (!isEmpty(response.data[0].data)) {
         let formData = {};

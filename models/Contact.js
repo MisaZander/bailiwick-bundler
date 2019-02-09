@@ -19,18 +19,9 @@ const ContactSchema = new Schema({
   },
   data: [
     {
-      ahref: {
-        type: String
-      },
-      aval: {
-        type: String
-      },
       fieldname: {
         type: String,
         required: true
-      },
-      img: {
-        type: String
       },
       key: {
         type: Number,
@@ -39,9 +30,6 @@ const ContactSchema = new Schema({
       text: {
         type: String,
         required: true
-      },
-      texttype: {
-        type: String
       }
     }
   ]
