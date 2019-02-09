@@ -58,7 +58,7 @@ class AlterAbout extends Component {
                 return (
                   <TextFieldGroup
                     key={datapoint.key}
-                    name={datapoint.fieldname}
+                    name={datapoint.texttype + "text" + datapoint.key}
                     type="text"
                     placeholder="Enter a headline..."
                     label="Headline:"
@@ -68,7 +68,7 @@ class AlterAbout extends Component {
                 return (
                   <TextAreaFieldGroup
                     key={datapoint.key}
-                    name={datapoint.fieldname}
+                    name={datapoint.texttype + "text" + datapoint.key}
                     placeholder="Enter body text..."
                     label="Body Paragraph:"
                   />
