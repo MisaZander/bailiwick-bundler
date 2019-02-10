@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { GET_CONTENT, LOADING, CLEAR_FORM, POPULATE } from "./types";
 import isEmpty from "../validation/is-empty";
+import docuformer from "../utils/M-RFconverter";
 
 //Get content for a page
 export const getContent = (page, dispatchForm = false) => dispatch => {
@@ -31,7 +32,10 @@ export const getContent = (page, dispatchForm = false) => dispatch => {
         type: CLEAR_FORM
       });
       if (!isEmpty(response.data[0].data) && dispatchForm) {
-        dispatch(populateForm(response.data[0]));
+        dispatch({
+          type: POPULATE,
+          payload: docuformer.MongoToRF(response.data[0])
+        });
       }
     })
     .catch(err => {
@@ -69,7 +73,10 @@ export const alterContent = (target, newDocument) => dispatch => {
       dispatch({
         type: CLEAR_FORM
       });
-      dispatch(populateForm(response.data));
+      dispatch({
+        type: POPULATE,
+        payload: docuformer.MongoToRF(response.data)
+      });
     })
     .catch(err => {
       console.log(err);
@@ -86,24 +93,3 @@ export const setLoading = () => {
     type: LOADING
   };
 }; //setLoading()
-
-const populateForm = data => dispatch => {
-  let formData = {};
-  formData.title = isEmpty(data.title) ? null : data.title;
-  formData.calltoaction = isEmpty(data.calltoaction) ? null : data.calltoaction;
-  data.data.forEach(element => {
-    for (var key in element) {
-      if (element.hasOwnProperty(key)) {
-        if (key === "key" || key === "texttype" || key === "_id") {
-          continue;
-        } else {
-          formData[element.texttype + key + element.key] = element[key];
-        }
-      }
-    }
-  });
-  dispatch({
-    type: POPULATE,
-    payload: formData
-  });
-};
