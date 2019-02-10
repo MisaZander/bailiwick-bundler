@@ -8,8 +8,6 @@ const Contact = require("../../models/Contact");
 const Mother = require("../../models/Mother");
 const passport = require("passport");
 
-const isEmpty = require("../../validation/is-empty");
-
 //@route GET /api/content/about
 //@desc Obtain all the about content
 //@access Public
@@ -24,43 +22,6 @@ router.get("/about", (req, res) => {
     return res.status(200).json(about);
   }); //About.find.exec()
 }); //router.get()
-
-//@route POST /api/content/about
-//@desc Rewrite the about content
-//@access Private
-// router.post(
-//   "/about",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     const errors = {};
-
-//     //Are you even allowed to mess with this?
-//     if (req.user.userlevel === 0) {
-//       errors.forbidden =
-//         "You do not have the necessary authority to perform that action";
-//       return res.status(403).json(errors);
-//     }
-//     //TODO: Call input validator
-//     // const { contentName, title, data } = req.body;
-
-//     // const newAbout = new About({
-//     //   contentName,
-//     //   title,
-//     //   data
-//     // }); //new About()
-
-//     //Parse the data into a Mongo friendly format
-
-//     newAbout.save((err, about) => {
-//       if (err) {
-//         console.log("About saving error", err);
-//         errors.err = err;
-//         return res.status(400).json(errors);
-//       }
-//       return res.status(200).json(about);
-//     }); //newAbout.save()
-//   }
-// ); //router.post()
 
 //@route GET /api/content/contact
 //@desc Obtain the contact deets
@@ -105,42 +66,6 @@ router.get("/contact", (req, res) => {
   }); // Setting find
 });
 
-//@route POST /api/content/contact
-//@desc Update calling card
-//@access Private
-// router.post(
-//   "/contact",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     const errors = {};
-
-//     //Are you even allowed to mess with this?
-//     if (req.user.userlevel < 2) {
-//       errors.forbidden =
-//         "You do not have the necessary authority to perform that action";
-//       return res.status(403).json(errors);
-//     }
-//     //TODO: Call input validator
-//     const { contentName, name, email, phone } = req.body;
-
-//     const newContact = new Contact({
-//       contentName,
-//       name,
-//       email,
-//       phone
-//     }); //new CallingCard()
-
-//     newContact.save((err, card) => {
-//       if (err) {
-//         console.log("Calling Card save error", err);
-//         errors.err = err;
-//         return res.status(400).json(errors);
-//       }
-//       return res.status(200).json(card);
-//     }); //newCC.save()
-//   }
-// ); //router.post()
-
 //@route GET /api/content
 //@desc Obtain all the landing content
 //@access Public
@@ -156,43 +81,7 @@ router.get("/", (req, res) => {
   }); //Landing.find.exec()
 }); //router.get()
 
-//@route POST /api/content
-//@desc Rewrite the landing content
-//@access Private
-// router.post(
-//   "/",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     const errors = {};
-
-//     //Are you even allowed to mess with this?
-//     if (req.user.userlevel === 0) {
-//       errors.forbidden =
-//         "You do not have the necessary authority to perform that action";
-//       return res.status(403).json(errors);
-//     }
-//     //TODO: Call input validator
-//     const { contentName, title, calltoaction, data } = req.body;
-
-//     const newLanding = new Landing({
-//       contentName,
-//       title,
-//       calltoaction,
-//       data
-//     }); //new Landing()
-
-//     newLanding.save((err, landing) => {
-//       if (err) {
-//         console.log("Landing save error", err);
-//         errors.err = err;
-//         return res.status(400).json(errors);
-//       }
-//       return res.status(200).json(landing);
-//     }); //newLanding.save()
-//   }
-// ); //router.post()
-
-//@route POST /api/content/:target
+//@route PUT /api/content/:target
 //@desc Rewrite target content
 //@access Private
 router.put(
@@ -207,10 +96,7 @@ router.put(
         "You do not have the necessary authority to perform that action";
       return res.status(403).json(errors);
     }
-
-    //console.log("req.body: ", req.body); //req.body ONLY contains submitted data
     const parsedDocument = docuparser(req.body); //Turn Redux-Form values into a Mongo document
-    //return res.status(200).json(parsedDocument);
     Mother.findOneAndUpdate(
       { contentName: req.params.target },
       parsedDocument,
@@ -221,33 +107,12 @@ router.put(
         errors.err = err;
         return res.status(500).json(errors);
       }
-      console.log("newDoc Response:", newDoc);
       return res.status(200).json(newDoc);
     });
-
-    // //TODO: Call input validator
-    // const { contentName, title, calltoaction, data } = req.body;
-
-    // const newLanding = new Landing({
-    //   contentName,
-    //   title,
-    //   calltoaction,
-    //   data
-    // }); //new Landing()
-
-    // newLanding.save((err, landing) => {
-    //   if (err) {
-    //     console.log("Landing save error", err);
-    //     errors.err = err;
-    //     return res.status(400).json(errors);
-    //   }
-    //   return res.status(200).json(landing);
-    // }); //newLanding.save()
   }
 ); //router.put()
 
 const docuparser = reduxFormObj => {
-  console.log("Reduxformobj", reduxFormObj);
   let newDoc = {};
   newDoc.data = [];
   for (let key in reduxFormObj) {
@@ -264,7 +129,6 @@ const docuparser = reduxFormObj => {
       newDoc[key] = reduxFormObj[key];
     }
   }
-  console.log("newdoc", newDoc);
   return newDoc;
 };
 

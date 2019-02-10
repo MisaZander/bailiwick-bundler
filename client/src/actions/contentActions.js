@@ -23,7 +23,6 @@ export const getContent = (page, dispatchForm = false) => dispatch => {
   axios
     .get(apiLink)
     .then(response => {
-      console.log("Axios GET:", response.data);
       dispatch({
         type: GET_CONTENT,
         payload: response.data
@@ -32,7 +31,6 @@ export const getContent = (page, dispatchForm = false) => dispatch => {
         type: CLEAR_FORM
       });
       if (!isEmpty(response.data[0].data) && dispatchForm) {
-        //console.log("Calling populateForm");
         dispatch(populateForm(response.data[0]));
       }
     })
@@ -62,7 +60,6 @@ export const alterContent = (target, newDocument) => dispatch => {
   axios
     .put(apiLink, newDocument)
     .then(response => {
-      console.log("Axios PUT:", response.data);
       let wrappedData = [];
       wrappedData.push(response.data); //Public content expects an array
       dispatch({
@@ -91,7 +88,6 @@ export const setLoading = () => {
 }; //setLoading()
 
 const populateForm = data => dispatch => {
-  console.log("Pupulating...:", data);
   let formData = {};
   formData.title = isEmpty(data.title) ? null : data.title;
   formData.calltoaction = isEmpty(data.calltoaction) ? null : data.calltoaction;
@@ -106,7 +102,6 @@ const populateForm = data => dispatch => {
       }
     }
   });
-  console.log("Dispatching Form data:", formData);
   dispatch({
     type: POPULATE,
     payload: formData

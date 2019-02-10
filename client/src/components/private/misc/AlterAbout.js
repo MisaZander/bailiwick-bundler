@@ -30,7 +30,6 @@ class AlterAbout extends Component {
   };
 
   commit = () => {
-    console.log("Submit attempt:", this.props.data);
     this.props.alterContent("about", this.props.data);
   };
 

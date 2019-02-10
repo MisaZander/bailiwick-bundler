@@ -22,12 +22,10 @@ class Landing extends Component {
     const { content, isLoading } = this.props.content;
     let title, calltoaction, blurbs, finale;
     if (isEmpty(content) || isLoading) {
-      //console.log("Adjust keep spinning spinning spinning...");
       title = <Spinner />;
     } else {
       if (!isEmpty(content) && !isLoading) {
         //const { content } = this.props.content;
-        //console.log(content[0]);
         if (content[0].contentName !== "landing") {
           return <ServerFault />;
         }
@@ -55,7 +53,6 @@ class Landing extends Component {
         );
         finale = <Finale finishers={finaleData} calltoaction={calltoaction} />;
       } else {
-        //console.log(content.length);
         title = (
           <h4 className="text-center">
             Owner of this site needs to generate some content...
