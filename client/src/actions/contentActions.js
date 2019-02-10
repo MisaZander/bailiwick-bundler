@@ -6,11 +6,7 @@ import isEmpty from "../validation/is-empty";
 import docuparser from "../utils/M-RFconverter";
 
 //Get content for a page
-export const getContent = (
-  page,
-  dispatchForm = false,
-  exclusions = ["_id", "key", "texttype"]
-) => dispatch => {
+export const getContent = (page, dispatchForm = false) => dispatch => {
   dispatch(setLoading());
   let apiLink;
   switch (page) {
@@ -38,7 +34,7 @@ export const getContent = (
       if (!isEmpty(response.data[0].data) && dispatchForm) {
         dispatch({
           type: POPULATE,
-          payload: docuparser.MongoToRF(response.data[0], exclusions)
+          payload: docuparser.MongoToRF(response.data[0])
         });
       }
     })
@@ -51,11 +47,7 @@ export const getContent = (
     }); //axios catch
 }; //getContent()
 
-export const alterContent = (
-  target,
-  newDocument,
-  exclusions = ["_id", "key", "texttype"]
-) => dispatch => {
+export const alterContent = (target, newDocument) => dispatch => {
   dispatch(setLoading());
   let apiLink;
   switch (target) {
@@ -83,7 +75,7 @@ export const alterContent = (
       });
       dispatch({
         type: POPULATE,
-        payload: docuparser.MongoToRF(response.data, exclusions)
+        payload: docuparser.MongoToRF(response.data)
       });
     })
     .catch(err => {

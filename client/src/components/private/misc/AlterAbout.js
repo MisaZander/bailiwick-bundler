@@ -10,13 +10,30 @@ import PrivNavbar from "../layout/PrivNavbar";
 import Spinner from "../../common/Spinner";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import TextAreaFieldGroup from "../../common/TextAreaFieldGroup";
+import docuparser from "../../../utils/M-RFconverter";
 
 const selector = getFormValues("formData");
-//const areaSelector = formValueSelector("TAFGData");
 
 class AlterAbout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isInitialized: false,
+      fields: {}
+    };
+  }
+
   componentDidMount() {
     this.props.getContent("about", true);
+  }
+
+  componentDidUpdate() {
+    if (!isEmpty(this.props.content.content) && !this.state.isInitialized) {
+      this.setState({
+        isInitialized: true,
+        fields: docuparser.MongoToRF(this.props.content.content[0])
+      });
+    }
   }
 
   addField = type => {

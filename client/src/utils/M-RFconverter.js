@@ -19,8 +19,8 @@ export default {
     return newDoc;
   },
 
-  MongoToRF: (mongoData, exclusions = []) => {
-    console.log(mongoData);
+  MongoToRF: (mongoData, exclusions = ["_id", "key", "texttype"]) => {
+    //console.log(mongoData);
     let formData = {};
     for (let key in mongoData) {
       if (key === "data") {

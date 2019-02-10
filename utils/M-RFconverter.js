@@ -19,19 +19,15 @@ module.exports = {
     return newDoc;
   },
 
-  MongoToRF: mongoData => {
-    console.log(mongoData);
+  MongoToRF: (mongoData, exclusions = ["_id", "key", "texttype"]) => {
+    //console.log(mongoData);
     let formData = {};
     for (let key in mongoData) {
       if (key === "data") {
         mongoData.data.forEach(element => {
           for (var arrKey in element) {
             if (element.hasOwnProperty(arrKey)) {
-              if (
-                arrKey === "key" ||
-                arrKey === "texttype" ||
-                arrKey === "_id"
-              ) {
+              if (exclusions.indexOf(arrKey) !== -1) {
                 continue;
               } else {
                 formData[element.texttype + arrKey + element.key] =
