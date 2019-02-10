@@ -60,6 +60,36 @@ class AlterAbout extends Component {
       //Classic "OR" condition
       if (content[0].contentName === "about") {
         //Extra percaution
+        const fields = [];
+        for (let key in this.state.fields) {
+          if (this.state.fields.hasOwnProperty(key)) {
+            if (key === "title" || isEmpty(this.state.fields[key])) {
+              continue;
+            } else {
+              if (key.includes("headline")) {
+                fields.push(
+                  <TextFieldGroup
+                    key={parseInt(key.charAt(key.length - 1))}
+                    name={key}
+                    type="text"
+                    placeholder="Enter a headline..."
+                    label="Headline:"
+                  />
+                );
+              } else if (key.includes("body")) {
+                fields.push(
+                  <TextAreaFieldGroup
+                    key={parseInt(key.charAt(key.length - 1))}
+                    name={key}
+                    placeholder="Enter body text..."
+                    label="Body Paragraph:"
+                  />
+                );
+              }
+            }
+          }
+        }
+
         renderables = (
           <form>
             <h1 className="display-4 text-center">About You</h1>
@@ -70,29 +100,7 @@ class AlterAbout extends Component {
               label="Page Title"
             />
             <hr className="my-3" />
-            {content[0].data.map(datapoint => {
-              if (datapoint.texttype === "headline") {
-                return (
-                  <TextFieldGroup
-                    key={datapoint.key}
-                    name={datapoint.texttype + "text" + datapoint.key}
-                    type="text"
-                    placeholder="Enter a headline..."
-                    label="Headline:"
-                  />
-                );
-              } else if (datapoint.texttype === "body") {
-                return (
-                  <TextAreaFieldGroup
-                    key={datapoint.key}
-                    name={datapoint.texttype + "text" + datapoint.key}
-                    placeholder="Enter body text..."
-                    label="Body Paragraph:"
-                  />
-                );
-              }
-              return null;
-            })}
+            {fields}
             <button
               type="button"
               className="btn btn-primary btn-block"
