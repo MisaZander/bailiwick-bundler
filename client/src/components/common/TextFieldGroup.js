@@ -57,7 +57,8 @@ TextFieldGroup.defaultProps = {
 //Export currently typed data to the Redux state
 TextFieldGroup = reduxForm({
   form: "formData",
-  enableReinitialize: true
+  enableReinitialize: true,
+  destroyOnUnmount: false
 })(TextFieldGroup);
 
 export default connect(

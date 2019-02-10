@@ -1,6 +1,7 @@
 module.exports = {
   RFToMongo: reduxFormObj => {
     let newDoc = {};
+    let index = 1; //An altered doc should probably be rekeyed
     newDoc.data = [];
     for (let key in reduxFormObj) {
       if (!isNaN(parseInt(key.charAt(key.length - 1)))) {
@@ -8,10 +9,11 @@ module.exports = {
         //The last char in a data element will be a number
         let splits = key.split("text"); // ["texttype", "key"];
         newDoc.data.push({
-          key: parseInt(splits[1]),
+          key: index,
           texttype: splits[0],
           text: reduxFormObj[key]
         });
+        index++;
       } else {
         newDoc[key] = reduxFormObj[key];
       }

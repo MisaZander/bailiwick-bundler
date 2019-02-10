@@ -39,15 +39,45 @@ class AlterAbout extends Component {
   addField = type => {
     //This should tack on a new field to the DB
     //.then() should fetch new content
+    let newKey =
+      type + "text" + (this.props.content.content[0].data.length + 1);
+    let newState = this.state;
+    newState.fields[newKey] = "";
+    this.setState(newState);
   };
 
-  spliceField = key => {
-    //This should splice out a document from data
-    //.then() should fetch the new data
+  spliceField = field => {
+    //Much like ES6 filter, don't include passed field in new state
+    let newState = {},
+      oldState = this.state.fields;
+    console.log(field);
+    console.log(oldState);
+    for (let key in oldState) {
+      if (oldState.hasOwnProperty(key)) {
+        if (key === field) {
+          continue; //Wanna splice, skip it
+        } else {
+          newState[key] = oldState[key];
+        }
+      }
+    }
+    console.log(newState);
+    this.setState({ fields: newState });
   };
 
   commit = () => {
-    this.props.alterContent("about", this.props.data);
+    let newDoc = {};
+    for (let key in this.props.data) {
+      //If property was taken out of state, it will be ignored
+      if (this.props.data.hasOwnProperty(key)) {
+        if (this.state.fields.hasOwnProperty(key)) {
+          newDoc[key] = this.props.data[key];
+        } else {
+          continue;
+        }
+      }
+    }
+    this.props.alterContent("about", newDoc);
   };
 
   render() {
@@ -63,27 +93,45 @@ class AlterAbout extends Component {
         const fields = [];
         for (let key in this.state.fields) {
           if (this.state.fields.hasOwnProperty(key)) {
-            if (key === "title" || isEmpty(this.state.fields[key])) {
+            if (key === "title") {
               continue;
             } else {
               if (key.includes("headline")) {
                 fields.push(
-                  <TextFieldGroup
-                    key={parseInt(key.charAt(key.length - 1))}
-                    name={key}
-                    type="text"
-                    placeholder="Enter a headline..."
-                    label="Headline:"
-                  />
+                  <div key={parseInt(key.charAt(key.length - 1))}>
+                    <TextFieldGroup
+                      key={parseInt(key.charAt(key.length - 1))}
+                      name={key}
+                      type="text"
+                      placeholder="Enter a headline..."
+                      label="Headline:"
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-small btn-danger"
+                      onClick={() => this.spliceField(key)}
+                    >
+                      Delete Headline
+                    </button>
+                  </div>
                 );
               } else if (key.includes("body")) {
                 fields.push(
-                  <TextAreaFieldGroup
-                    key={parseInt(key.charAt(key.length - 1))}
-                    name={key}
-                    placeholder="Enter body text..."
-                    label="Body Paragraph:"
-                  />
+                  <div key={parseInt(key.charAt(key.length - 1))}>
+                    <TextAreaFieldGroup
+                      key={parseInt(key.charAt(key.length - 1))}
+                      name={key}
+                      placeholder="Enter body text..."
+                      label="Body Paragraph:"
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-small btn-danger"
+                      onClick={() => this.spliceField(key)}
+                    >
+                      Delete Body Paragraph
+                    </button>
+                  </div>
                 );
               }
             }
@@ -101,6 +149,21 @@ class AlterAbout extends Component {
             />
             <hr className="my-3" />
             {fields}
+            <button
+              type="button"
+              className="btn btn-lg btn-light"
+              onClick={() => this.addField("headline")}
+            >
+              Add Headline
+            </button>
+            {"    "}
+            <button
+              type="button"
+              className="btn btn-lg btn-dark"
+              onClick={() => this.addField("body")}
+            >
+              Add Body Paragraph
+            </button>
             <button
               type="button"
               className="btn btn-primary btn-block"

@@ -51,7 +51,8 @@ TextAreaFieldGroup.propTypes = {
 
 TextAreaFieldGroup = reduxForm({
   form: "formData",
-  enableReinitialize: true
+  enableReinitialize: true,
+  destroyOnUnmount: false
 })(TextAreaFieldGroup);
 
 export default connect(
