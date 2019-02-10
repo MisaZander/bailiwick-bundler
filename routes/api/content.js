@@ -8,6 +8,8 @@ const Contact = require("../../models/Contact");
 const Mother = require("../../models/Mother");
 const passport = require("passport");
 
+const docuparser = require("../../utils/M-RFconverter");
+
 //@route GET /api/content/about
 //@desc Obtain all the about content
 //@access Public
@@ -96,7 +98,7 @@ router.put(
         "You do not have the necessary authority to perform that action";
       return res.status(403).json(errors);
     }
-    const parsedDocument = docuparser(req.body); //Turn Redux-Form values into a Mongo document
+    const parsedDocument = docuparser.RFToMongo(req.body); //Turn Redux-Form values into a Mongo document
     Mother.findOneAndUpdate(
       { contentName: req.params.target },
       parsedDocument,
@@ -111,25 +113,5 @@ router.put(
     });
   }
 ); //router.put()
-
-const docuparser = reduxFormObj => {
-  let newDoc = {};
-  newDoc.data = [];
-  for (let key in reduxFormObj) {
-    if (!isNaN(parseInt(key.charAt(key.length - 1)))) {
-      //Add to data if last char is number
-      //The last char in a data element will be a number
-      let splits = key.split("text"); // ["texttype", "key"];
-      newDoc.data.push({
-        key: parseInt(splits[1]),
-        texttype: splits[0],
-        text: reduxFormObj[key]
-      });
-    } else {
-      newDoc[key] = reduxFormObj[key];
-    }
-  }
-  return newDoc;
-};
 
 module.exports = router;

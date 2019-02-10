@@ -3,10 +3,14 @@ import axios from "axios";
 
 import { GET_CONTENT, LOADING, CLEAR_FORM, POPULATE } from "./types";
 import isEmpty from "../validation/is-empty";
-import docuformer from "../utils/M-RFconverter";
+import docuparser from "../utils/M-RFconverter";
 
 //Get content for a page
-export const getContent = (page, dispatchForm = false) => dispatch => {
+export const getContent = (
+  page,
+  dispatchForm = false,
+  exclusions = ["_id", "key", "texttype"]
+) => dispatch => {
   dispatch(setLoading());
   let apiLink;
   switch (page) {
@@ -34,7 +38,7 @@ export const getContent = (page, dispatchForm = false) => dispatch => {
       if (!isEmpty(response.data[0].data) && dispatchForm) {
         dispatch({
           type: POPULATE,
-          payload: docuformer.MongoToRF(response.data[0])
+          payload: docuparser.MongoToRF(response.data[0], exclusions)
         });
       }
     })
@@ -47,7 +51,11 @@ export const getContent = (page, dispatchForm = false) => dispatch => {
     }); //axios catch
 }; //getContent()
 
-export const alterContent = (target, newDocument) => dispatch => {
+export const alterContent = (
+  target,
+  newDocument,
+  exclusions = ["_id", "key", "texttype"]
+) => dispatch => {
   dispatch(setLoading());
   let apiLink;
   switch (target) {
@@ -75,7 +83,7 @@ export const alterContent = (target, newDocument) => dispatch => {
       });
       dispatch({
         type: POPULATE,
-        payload: docuformer.MongoToRF(response.data)
+        payload: docuparser.MongoToRF(response.data, exclusions)
       });
     })
     .catch(err => {

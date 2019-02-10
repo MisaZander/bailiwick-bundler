@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   RFToMongo: reduxFormObj => {
     let newDoc = {};
     newDoc.data = [];
@@ -19,7 +19,7 @@ export default {
     return newDoc;
   },
 
-  MongoToRF: (mongoData, exclusions = []) => {
+  MongoToRF: mongoData => {
     console.log(mongoData);
     let formData = {};
     for (let key in mongoData) {
@@ -27,7 +27,11 @@ export default {
         mongoData.data.forEach(element => {
           for (var arrKey in element) {
             if (element.hasOwnProperty(arrKey)) {
-              if (exclusions.indexOf(arrKey) !== -1) {
+              if (
+                arrKey === "key" ||
+                arrKey === "texttype" ||
+                arrKey === "_id"
+              ) {
                 continue;
               } else {
                 formData[element.texttype + arrKey + element.key] =
