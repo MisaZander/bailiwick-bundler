@@ -5,7 +5,10 @@ const Landing = require("../../models/Landing"); //Landing model, with mongoose 
 const About = require("../../models/About");
 const Setting = require("../../models/Setting");
 const Contact = require("../../models/Contact");
+const Mother = require("../../models/Mother");
 const passport = require("passport");
+
+const isEmpty = require("../../validation/is-empty");
 
 //@route GET /api/content/about
 //@desc Obtain all the about content
@@ -25,37 +28,39 @@ router.get("/about", (req, res) => {
 //@route POST /api/content/about
 //@desc Rewrite the about content
 //@access Private
-router.post(
-  "/about",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
+// router.post(
+//   "/about",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
 
-    //Are you even allowed to mess with this?
-    if (req.user.userlevel === 0) {
-      errors.forbidden =
-        "You do not have the necessary authority to perform that action";
-      return res.status(403).json(errors);
-    }
-    //TODO: Call input validator
-    const { contentName, title, data } = req.body;
+//     //Are you even allowed to mess with this?
+//     if (req.user.userlevel === 0) {
+//       errors.forbidden =
+//         "You do not have the necessary authority to perform that action";
+//       return res.status(403).json(errors);
+//     }
+//     //TODO: Call input validator
+//     // const { contentName, title, data } = req.body;
 
-    const newAbout = new About({
-      contentName,
-      title,
-      data
-    }); //new About()
+//     // const newAbout = new About({
+//     //   contentName,
+//     //   title,
+//     //   data
+//     // }); //new About()
 
-    newAbout.save((err, about) => {
-      if (err) {
-        console.log("About saving error", err);
-        errors.err = err;
-        return res.status(400).json(errors);
-      }
-      return res.status(200).json(about);
-    }); //newAbout.save()
-  }
-); //router.post()
+//     //Parse the data into a Mongo friendly format
+
+//     newAbout.save((err, about) => {
+//       if (err) {
+//         console.log("About saving error", err);
+//         errors.err = err;
+//         return res.status(400).json(errors);
+//       }
+//       return res.status(200).json(about);
+//     }); //newAbout.save()
+//   }
+// ); //router.post()
 
 //@route GET /api/content/contact
 //@desc Obtain the contact deets
@@ -103,38 +108,38 @@ router.get("/contact", (req, res) => {
 //@route POST /api/content/contact
 //@desc Update calling card
 //@access Private
-router.post(
-  "/contact",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
+// router.post(
+//   "/contact",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
 
-    //Are you even allowed to mess with this?
-    if (req.user.userlevel < 2) {
-      errors.forbidden =
-        "You do not have the necessary authority to perform that action";
-      return res.status(403).json(errors);
-    }
-    //TODO: Call input validator
-    const { contentName, name, email, phone } = req.body;
+//     //Are you even allowed to mess with this?
+//     if (req.user.userlevel < 2) {
+//       errors.forbidden =
+//         "You do not have the necessary authority to perform that action";
+//       return res.status(403).json(errors);
+//     }
+//     //TODO: Call input validator
+//     const { contentName, name, email, phone } = req.body;
 
-    const newContact = new Contact({
-      contentName,
-      name,
-      email,
-      phone
-    }); //new CallingCard()
+//     const newContact = new Contact({
+//       contentName,
+//       name,
+//       email,
+//       phone
+//     }); //new CallingCard()
 
-    newContact.save((err, card) => {
-      if (err) {
-        console.log("Calling Card save error", err);
-        errors.err = err;
-        return res.status(400).json(errors);
-      }
-      return res.status(200).json(card);
-    }); //newCC.save()
-  }
-); //router.post()
+//     newContact.save((err, card) => {
+//       if (err) {
+//         console.log("Calling Card save error", err);
+//         errors.err = err;
+//         return res.status(400).json(errors);
+//       }
+//       return res.status(200).json(card);
+//     }); //newCC.save()
+//   }
+// ); //router.post()
 
 //@route GET /api/content
 //@desc Obtain all the landing content
@@ -154,8 +159,44 @@ router.get("/", (req, res) => {
 //@route POST /api/content
 //@desc Rewrite the landing content
 //@access Private
-router.post(
-  "/",
+// router.post(
+//   "/",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+
+//     //Are you even allowed to mess with this?
+//     if (req.user.userlevel === 0) {
+//       errors.forbidden =
+//         "You do not have the necessary authority to perform that action";
+//       return res.status(403).json(errors);
+//     }
+//     //TODO: Call input validator
+//     const { contentName, title, calltoaction, data } = req.body;
+
+//     const newLanding = new Landing({
+//       contentName,
+//       title,
+//       calltoaction,
+//       data
+//     }); //new Landing()
+
+//     newLanding.save((err, landing) => {
+//       if (err) {
+//         console.log("Landing save error", err);
+//         errors.err = err;
+//         return res.status(400).json(errors);
+//       }
+//       return res.status(200).json(landing);
+//     }); //newLanding.save()
+//   }
+// ); //router.post()
+
+//@route POST /api/content/:target
+//@desc Rewrite target content
+//@access Private
+router.put(
+  "/:target",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const errors = {};
@@ -166,25 +207,65 @@ router.post(
         "You do not have the necessary authority to perform that action";
       return res.status(403).json(errors);
     }
-    //TODO: Call input validator
-    const { contentName, title, calltoaction, data } = req.body;
 
-    const newLanding = new Landing({
-      contentName,
-      title,
-      calltoaction,
-      data
-    }); //new Landing()
-
-    newLanding.save((err, landing) => {
+    //console.log("req.body: ", req.body); //req.body ONLY contains submitted data
+    const parsedDocument = docuparser(req.body); //Turn Redux-Form values into a Mongo document
+    //return res.status(200).json(parsedDocument);
+    Mother.findOneAndUpdate(
+      { contentName: req.params.target },
+      parsedDocument,
+      { new: true }
+    ).exec((err, newDoc) => {
       if (err) {
-        console.log("Landing save error", err);
+        console.log(err);
         errors.err = err;
-        return res.status(400).json(errors);
+        return res.status(500).json(errors);
       }
-      return res.status(200).json(landing);
-    }); //newLanding.save()
+      console.log("newDoc Response:", newDoc);
+      return res.status(200).json(newDoc);
+    });
+
+    // //TODO: Call input validator
+    // const { contentName, title, calltoaction, data } = req.body;
+
+    // const newLanding = new Landing({
+    //   contentName,
+    //   title,
+    //   calltoaction,
+    //   data
+    // }); //new Landing()
+
+    // newLanding.save((err, landing) => {
+    //   if (err) {
+    //     console.log("Landing save error", err);
+    //     errors.err = err;
+    //     return res.status(400).json(errors);
+    //   }
+    //   return res.status(200).json(landing);
+    // }); //newLanding.save()
   }
-); //router.post()
+); //router.put()
+
+const docuparser = reduxFormObj => {
+  console.log("Reduxformobj", reduxFormObj);
+  let newDoc = {};
+  newDoc.data = [];
+  for (let key in reduxFormObj) {
+    if (!isNaN(parseInt(key.charAt(key.length - 1)))) {
+      //Add to data if last char is number
+      //The last char in a data element will be a number
+      let splits = key.split("text"); // ["texttype", "key"];
+      newDoc.data.push({
+        key: parseInt(splits[1]),
+        texttype: splits[0],
+        text: reduxFormObj[key]
+      });
+    } else {
+      newDoc[key] = reduxFormObj[key];
+    }
+  }
+  console.log("newdoc", newDoc);
+  return newDoc;
+};
 
 module.exports = router;

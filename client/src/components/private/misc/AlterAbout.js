@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getFormValues, reduxForm } from "redux-form";
 
-import { getContent } from "../../../actions/contentActions";
+import { alterContent, getContent } from "../../../actions/contentActions";
 import isEmpty from "../../../validation/is-empty";
 import PrivNavbar from "../layout/PrivNavbar";
 import Spinner from "../../common/Spinner";
@@ -30,7 +30,8 @@ class AlterAbout extends Component {
   };
 
   commit = () => {
-    //Send state data to backend
+    console.log("Submit attempt:", this.props.data);
+    this.props.alterContent("about", this.props.data);
   };
 
   render() {
@@ -76,7 +77,13 @@ class AlterAbout extends Component {
               }
               return null;
             })}
-            {/* Add submit button */}
+            <button
+              type="button"
+              className="btn btn-primary btn-block"
+              onClick={this.commit}
+            >
+              Save Changes
+            </button>
           </form>
         ); //renderables = ()
       } // if content = about
@@ -107,5 +114,5 @@ export default connect(
     content: state.content,
     data: selector(state)
   }),
-  { getContent }
+  { alterContent, getContent }
 )(AlterAbout);

@@ -3,5 +3,6 @@ module.exports = {
   Landing: require("./Landing"),
   User: require("./User"),
   Contact: require("./Contact"),
-  Setting: require("./Setting")
+  Setting: require("./Setting"),
+  Mother: require("./Mother")
 };

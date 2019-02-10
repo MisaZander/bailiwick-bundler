@@ -1,5 +1,5 @@
-const mongose = require("mongoose");
-const Schema = mongose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const MotherOfAllSchemas = new Schema({
   contentname: {
@@ -55,4 +55,8 @@ const MotherOfAllSchemas = new Schema({
   ]
 });
 
-module.exports = MotherOfAllSchemas;
+module.exports = Mother = mongoose.model(
+  "Mother",
+  MotherOfAllSchemas,
+  "contents"
+);
