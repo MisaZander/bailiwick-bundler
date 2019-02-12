@@ -121,7 +121,7 @@ class AlterLanding extends Component {
         //Check if the first or nth blurb exists
         while (!isEmpty(this.state.fields["blurbtitle" + index])) {
           blurbs.push(
-            <div className="card bg-light my-3">
+            <div className="card bg-light my-3" key={index}>
               <div className="card-header">
                 <h3>{"Blurb " + index + ":"}</h3>
               </div>
@@ -179,7 +179,7 @@ class AlterLanding extends Component {
 
         for (let i = 1; i < 4; i++) {
           finishers.push(
-            <div className="col-4 card">
+            <div className="col-4 card" key={i + index}>
               <div className="card-header">
                 <h3>{"Finisher " + i + ":"}</h3>
               </div>
