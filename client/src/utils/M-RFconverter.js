@@ -11,10 +11,10 @@ export default {
         //The last char in a data element will be a number
         cattypes.forEach(cattype => {
           if (key.includes(cattype)) {
-            newDoc.push({
+            newDoc.data.push({
               key: parseInt(key.charAt(key.length - 1)),
               cattype: cattype,
-              texttype: key.substring(cattype.length - 1, key.length - 2),
+              texttype: key.substring(cattype.length, key.length - 1),
               text: reduxFormObj[key]
             });
           }

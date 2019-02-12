@@ -3,6 +3,7 @@ module.exports = {
     reduxFormObj,
     cattypes = ["blurb", "finisher", "about", "contact"]
   ) => {
+    //console.log("Incoming data", reduxFormObj);
     let newDoc = {};
     newDoc.data = [];
     for (let key in reduxFormObj) {
@@ -11,10 +12,10 @@ module.exports = {
         //The last char in a data element will be a number
         cattypes.forEach(cattype => {
           if (key.includes(cattype)) {
-            newDoc.push({
+            newDoc.data.push({
               key: parseInt(key.charAt(key.length - 1)),
               cattype: cattype,
-              texttype: key.substring(cattype.length - 1, key.length - 2),
+              texttype: key.substring(cattype.length, key.length - 1),
               text: reduxFormObj[key]
             });
           }
@@ -23,6 +24,7 @@ module.exports = {
         newDoc[key] = reduxFormObj[key];
       }
     }
+    //console.log("Outgoing doc", newDoc);
     return newDoc;
   },
 

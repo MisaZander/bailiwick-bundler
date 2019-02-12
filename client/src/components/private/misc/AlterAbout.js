@@ -40,7 +40,7 @@ class AlterAbout extends Component {
     //This should tack on a new field to the DB
     //.then() should fetch new content
     let newKey =
-      type + "text" + (this.props.content.content[0].data.length + 1);
+      "about" + type + (this.props.content.content[0].data.length + 1);
     let newState = this.state;
     newState.fields[newKey] = "";
     this.setState(newState);
@@ -78,6 +78,7 @@ class AlterAbout extends Component {
       }
     }
     this.props.alterContent("about", newDoc);
+    //console.log("Gonda send", newDoc);
   };
 
   render() {

@@ -22,21 +22,6 @@ const MotherOfAllSchemas = new Schema({
   },
   data: [
     {
-      ahref: {
-        type: String
-      },
-      aval: {
-        type: String
-      },
-      category: {
-        type: String
-      },
-      event: {
-        type: String
-      },
-      img: {
-        type: String
-      },
       key: {
         type: Number,
         required: true
@@ -48,7 +33,7 @@ const MotherOfAllSchemas = new Schema({
       texttype: {
         type: String
       },
-      title: {
+      cattype: {
         type: String
       }
     }
