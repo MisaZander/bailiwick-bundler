@@ -22,6 +22,9 @@ const AboutSchema = new Schema({
       },
       texttype: {
         type: String
+      },
+      cattype: {
+        type: String
       }
     }
   ]

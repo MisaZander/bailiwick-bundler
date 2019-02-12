@@ -1,19 +1,24 @@
 module.exports = {
-  RFToMongo: reduxFormObj => {
+  RFToMongo: (
+    reduxFormObj,
+    cattypes = ["blurb", "finisher", "about", "contact"]
+  ) => {
     let newDoc = {};
-    let index = 1; //An altered doc should probably be rekeyed
     newDoc.data = [];
     for (let key in reduxFormObj) {
       if (!isNaN(parseInt(key.charAt(key.length - 1)))) {
         //Add to data if last char is number
         //The last char in a data element will be a number
-        let splits = key.split("text"); // ["texttype", "key"];
-        newDoc.data.push({
-          key: index,
-          texttype: splits[0],
-          text: reduxFormObj[key]
+        cattypes.forEach(cattype => {
+          if (key.includes(cattype)) {
+            newDoc.push({
+              key: parseInt(key.charAt(key.length - 1)),
+              cattype: cattype,
+              texttype: key.substring(cattype.length - 1, key.length - 2),
+              text: reduxFormObj[key]
+            });
+          }
         });
-        index++;
       } else {
         newDoc[key] = reduxFormObj[key];
       }
@@ -26,17 +31,8 @@ module.exports = {
     let formData = {};
     for (let key in mongoData) {
       if (key === "data") {
-        mongoData.data.forEach(element => {
-          for (var arrKey in element) {
-            if (element.hasOwnProperty(arrKey)) {
-              if (exclusions.indexOf(arrKey) !== -1) {
-                continue;
-              } else {
-                formData[element.texttype + arrKey + element.key] =
-                  element[arrKey];
-              }
-            }
-          }
+        mongoData.data.forEach(e => {
+          formData[e.cattype + e.texttype + e.key] = e.text;
         });
       } else {
         formData[key] = mongoData[key];
