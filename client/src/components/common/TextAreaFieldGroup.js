@@ -28,7 +28,7 @@ const customInput = props => {
         })}
         placeholder={props.placeholder}
         name={props.name}
-        rows="10"
+        rows="5"
         cols="40"
       />
       {props.info && (

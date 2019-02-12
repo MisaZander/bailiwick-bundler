@@ -85,7 +85,7 @@ class AlterLanding extends Component {
     let title,
       blurbs = [],
       cta,
-      finishers;
+      finishers = [];
 
     if (isEmpty(content) || isLoading) {
       title = <Spinner />;
@@ -100,6 +100,7 @@ class AlterLanding extends Component {
               type="text"
               placeholder="Enter a welcoming title for the public..."
               label="Page Title:"
+              info="The giant greeting at the top of your page!"
             />
           );
         }
@@ -110,6 +111,7 @@ class AlterLanding extends Component {
               type="text"
               placeholder="The last title the homepage will read..."
               label="Call to Action text:"
+              info="This small title will display after your blurbs, but before the finishers."
             />
           );
         }
@@ -173,9 +175,48 @@ class AlterLanding extends Component {
             </div>
           );
           index++;
+        } // The blurb while
+
+        for (let i = 1; i < 4; i++) {
+          finishers.push(
+            <div className="col-4 card">
+              <div className="card-header">
+                <h3>{"Finisher " + i + ":"}</h3>
+              </div>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">
+                  <TextFieldGroup
+                    name={"finisherahref" + i}
+                    type="text"
+                    placeholder="Enter location of site this button should point to..."
+                    label={"Finisher " + i + " Location:"}
+                    info="Path to another site location"
+                  />
+                </li>
+                <li className="list-group-item">
+                  <TextFieldGroup
+                    name={"finisheraval" + i}
+                    type="text"
+                    placeholder="Enter what the link button will show to the user"
+                    label={"Finisher " + i + " Link Title:"}
+                    info="What the text of the link button will say."
+                  />
+                </li>
+                <li className="list-group-item">
+                  <TextAreaFieldGroup
+                    name={"finishertext" + i}
+                    type="text"
+                    placeholder="Enter a sentance or two..."
+                    label={"Finisher " + i + " Description:"}
+                    info="A quick sentance at the end to convince the user to read more"
+                  />
+                </li>
+              </ul>
+            </div>
+          );
         }
-      }
-    } // if content = about
+      } // content === landing sanity check
+    } // isLoading else
 
     return (
       <div>
@@ -185,7 +226,8 @@ class AlterLanding extends Component {
             {title}
             {blurbs}
             {cta}
-            {finishers}
+            <hr className="my-4" />
+            <div className="row">{finishers}</div>
           </form>
         </div>
       </div>
