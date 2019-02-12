@@ -215,6 +215,16 @@ class AlterLanding extends Component {
             </div>
           );
         }
+        finishers.push(
+          <button
+            type="button"
+            className="btn btn-primary btn-block"
+            onClick={this.commit}
+            key={99}
+          >
+            Save Changes
+          </button>
+        );
       } // content === landing sanity check
     } // isLoading else
 
