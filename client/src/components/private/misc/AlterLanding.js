@@ -36,13 +36,16 @@ class AlterLanding extends Component {
     }
   }
 
-  addField = type => {
+  addBlurb = newIndex => {
     //This should tack on a new field to the DB
     //.then() should fetch new content
-    let newKey =
-      type + "text" + (this.props.content.content[0].data.length + 1);
     let newState = this.state;
-    newState.fields[newKey] = "";
+    //newIndex = 1; //DEBUGGING
+    newState.fields["blurbtitle" + newIndex] = "Title placeholder";
+    newState.fields["blurbtext" + newIndex] = "";
+    newState.fields["blurbahref" + newIndex] = "";
+    newState.fields["blurbaval" + newIndex] = "";
+    newState.fields["blurbimg" + newIndex] = "";
     this.setState(newState);
   };
 
@@ -78,6 +81,7 @@ class AlterLanding extends Component {
       }
     }
     this.props.alterContent("landing", newDoc);
+    //console.log("Gonda send:", newDoc);
   };
 
   render() {
@@ -176,6 +180,16 @@ class AlterLanding extends Component {
           );
           index++;
         } // The blurb while
+        blurbs.push(
+          <button
+            key={98}
+            type="button"
+            className="btn btn-success btn-block"
+            onClick={() => this.addBlurb(index)}
+          >
+            Add Blurb
+          </button>
+        );
 
         for (let i = 1; i < 4; i++) {
           finishers.push(

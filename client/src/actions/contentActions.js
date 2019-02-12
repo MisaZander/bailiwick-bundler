@@ -2,7 +2,7 @@
 import axios from "axios";
 
 import { GET_CONTENT, LOADING, CLEAR_FORM, POPULATE } from "./types";
-import isEmpty from "../validation/is-empty";
+//import isEmpty from "../validation/is-empty";
 import docuparser from "../utils/M-RFconverter";
 
 //Get content for a page
@@ -31,7 +31,7 @@ export const getContent = (page, dispatchForm = false) => dispatch => {
       dispatch({
         type: CLEAR_FORM
       });
-      if (!isEmpty(response.data[0].data) && dispatchForm) {
+      if (dispatchForm) {
         dispatch({
           type: POPULATE,
           payload: docuparser.MongoToRF(response.data[0])
