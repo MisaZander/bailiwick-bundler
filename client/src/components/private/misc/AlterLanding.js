@@ -29,9 +29,39 @@ class AlterLanding extends Component {
 
   componentDidUpdate() {
     if (!isEmpty(this.props.content.content) && !this.state.isInitialized) {
+      const formData = docuparser.MongoToRF(this.props.content.content[0]);
+      let newFormData = formData;
+      newFormData.finisherahref1 = isEmpty(formData.finisherhref1)
+        ? ""
+        : formData.finisherhref1;
+      newFormData.finisheraval1 = isEmpty(formData.finisheraval1)
+        ? ""
+        : formData.finisheraval1;
+      newFormData.finishertext1 = isEmpty(formData.finishertext1)
+        ? ""
+        : formData.finishertext1;
+      newFormData.finisherahref2 = isEmpty(formData.finisherhref2)
+        ? ""
+        : formData.finisherhref2;
+      newFormData.finisheraval2 = isEmpty(formData.finisheraval2)
+        ? ""
+        : formData.finisheraval2;
+      newFormData.finishertext2 = isEmpty(formData.finishertext2)
+        ? ""
+        : formData.finishertext2;
+      newFormData.finisherahref3 = isEmpty(formData.finisherhref3)
+        ? ""
+        : formData.finisherhref3;
+      newFormData.finisheraval3 = isEmpty(formData.finisheraval3)
+        ? ""
+        : formData.finisheraval3;
+      newFormData.finishertext3 = isEmpty(formData.finishertext3)
+        ? ""
+        : formData.finishertext3;
+      console.log(newFormData);
       this.setState({
         isInitialized: true,
-        fields: docuparser.MongoToRF(this.props.content.content[0])
+        fields: { ...newFormData }
       });
     }
   }
