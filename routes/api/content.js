@@ -30,13 +30,13 @@ router.get("/about", (req, res) => {
 //@access Public
 router.get("/contact", (req, res) => {
   const errors = {};
-  Contact.find({ contentName: "contact" }).exec((err, about) => {
+  Contact.find({ contentName: "contact" }).exec((err, contact) => {
     if (err) {
       errors.err = err;
       return res.status(404).json(errors);
     }
     //This returns an array, even if there's a single result
-    return res.status(200).json(about);
+    return res.status(200).json(contact);
   }); //About.find.exec()
   //Obtain the contact preferences
   // Setting.find().exec((err, settingRes) => {

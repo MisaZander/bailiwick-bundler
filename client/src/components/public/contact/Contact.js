@@ -24,15 +24,14 @@ class Contact extends Component {
     } else {
       if (!isEmpty(content) && !isLoading) {
         //Conditially render calling card or form here
+
         if (content[0].mode === "Calling Card") {
-          // let deets = content[0].data.forEach(element => {
-          //   for (var key in element) {
-          //     if (element.hasOwnProperty(key)) {
-          //       deets[key] = element[key];
-          //     }
-          //   }
-          // });
-          renderables = <CallingCard deets={content[0]} />;
+          let deets = {};
+          content[0].data.forEach(element => {
+            deets[element.texttype] = element.text;
+          });
+          deets.title = content[0].title;
+          renderables = <CallingCard deets={deets} />;
         } else if (content[0].mode === "Anonymous Form") {
           renderables = <Form />;
         }

@@ -30,6 +30,9 @@ const ContactSchema = new Schema({
       texttype: {
         type: String,
         required: true
+      },
+      cattype: {
+        type: String
       }
     }
   ]
