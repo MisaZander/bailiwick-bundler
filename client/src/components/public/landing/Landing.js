@@ -37,20 +37,46 @@ class Landing extends Component {
         } else {
           calltoaction = "";
         }
-        let blurbData = content[0].data.filter(
-          datapoint => datapoint.texttype === "blurb"
+        let blurbRawData = content[0].data.filter(
+          datapoint => datapoint.cattype === "blurb"
         );
+
+        let blurbData = [];
+        if (!isEmpty(blurbRawData)) {
+          blurbRawData.forEach(fragment => {
+            if (blurbData.length < fragment.key) {
+              blurbData.push({});
+            }
+            blurbData[fragment.key - 1][
+              fragment.cattype + fragment.texttype + fragment.key
+            ] = fragment.text;
+          });
+        }
+
         blurbs = blurbData.map((blurb, index) => {
           return index % 2 === 0 ? (
-            <Right key={blurb.key} blurb={blurb} />
+            <Right key={index + 1} value={index + 1} blurb={blurb} />
           ) : (
-            <Left key={blurb.key} blurb={blurb} />
+            <Left key={index + 1} value={index + 1} blurb={blurb} />
           );
         });
 
-        let finaleData = content[0].data.filter(
-          datapoint => datapoint.texttype === "finisher"
+        let finaleRawData = content[0].data.filter(
+          datapoint => datapoint.cattype === "finisher"
         );
+
+        let finaleData = [];
+        if (!isEmpty(finaleRawData)) {
+          finaleRawData.forEach(fragment => {
+            if (finaleData.length < fragment.key) {
+              finaleData.push({});
+            }
+            finaleData[fragment.key - 1][
+              fragment.cattype + fragment.texttype + fragment.key
+            ] = fragment.text;
+          });
+        }
+
         finale = <Finale finishers={finaleData} calltoaction={calltoaction} />;
       } else {
         title = (

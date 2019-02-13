@@ -17,16 +17,16 @@ class Finale extends Component {
                   <div className="card" key={index}>
                     <div className="card-body">
                       <p className="card-text lead text-center">
-                        {finisher.text}
+                        {finisher["finishertext" + (index + 1)]}
                       </p>
                     </div>
                     <div className="card-footer">
-                      <Link to={finisher.ahref}>
+                      <Link to={finisher["finisherahref" + (index + 1)]}>
                         <button
                           type="button"
                           className="btn btn-block btn-info"
                         >
-                          {finisher.aval}
+                          {finisher["finisheraval" + (index + 1)]}
                         </button>
                       </Link>
                     </div>
