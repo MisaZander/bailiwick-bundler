@@ -30,42 +30,50 @@ router.get("/about", (req, res) => {
 //@access Public
 router.get("/contact", (req, res) => {
   const errors = {};
-  //Obtain the contact preferences
-  Setting.find().exec((err, settingRes) => {
+  Contact.find({ contentName: "contact" }).exec((err, about) => {
     if (err) {
-      console.log(err);
       errors.err = err;
       return res.status(404).json(errors);
     }
-    //Calling Card or Form?
-    let preference = settingRes[0].contact.selected;
-    if (preference === "Calling Card") {
-      Contact.find({ contentName: "contact" }).exec((err2, deets) => {
-        if (err2) {
-          console.log(err2);
-          errors.err = err2;
-          return res.status(404).json(errors);
-        }
-        let { contentName, title, mode, data } = deets[0];
-        let newDeetsObj = {
-          mode,
-          contentName,
-          title
-        };
-        data.forEach(datapoint => {
-          newDeetsObj[datapoint.texttype] = datapoint.text;
-        });
-        let newDeets = [];
-        newDeets.push(newDeetsObj); //All front end handlers expect an array response
-        return res.status(200).send(newDeets);
-      }); //Calling Card find()
-    } else if (preference === "Anonymous Form") {
-      let responseObj = { contentName: "contact", mode: "Anonymous Form" };
-      let response = [];
-      response.push(responseObj);
-      return res.status(200).send(response);
-    }
-  }); // Setting find
+    //This returns an array, even if there's a single result
+    return res.status(200).json(about);
+  }); //About.find.exec()
+  //Obtain the contact preferences
+  // Setting.find().exec((err, settingRes) => {
+  //   if (err) {
+  //     console.log(err);
+  //     errors.err = err;
+  //     return res.status(404).json(errors);
+  //   }
+  //   //Calling Card or Form?
+  //   let preference = settingRes[0].contact.selected;
+  //   if (preference === "Calling Card") {
+  //     Contact.find({ contentName: "contact" }).exec((err2, deets) => {
+  //       if (err2) {
+  //         console.log(err2);
+  //         errors.err = err2;
+  //         return res.status(404).json(errors);
+  //       }
+  //       let { contentName, title, mode, data } = deets[0];
+  //       let newDeetsObj = {
+  //         mode,
+  //         contentName,
+  //         title
+  //       };
+  //       data.forEach(datapoint => {
+  //         newDeetsObj[datapoint.texttype] = datapoint.text;
+  //       });
+  //       let newDeets = [];
+  //       newDeets.push(newDeetsObj); //All front end handlers expect an array response
+  //       return res.status(200).send(newDeets);
+  //     }); //Calling Card find()
+  //   } else if (preference === "Anonymous Form") {
+  //     let responseObj = { contentName: "contact", mode: "Anonymous Form" };
+  //     let response = [];
+  //     response.push(responseObj);
+  //     return res.status(200).send(response);
+  //   }
+  // }); // Setting find
 });
 
 //@route GET /api/content

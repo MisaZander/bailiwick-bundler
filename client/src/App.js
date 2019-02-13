@@ -13,6 +13,7 @@ import Profile from "./components/public/auth/Profile";
 import AdminLanding from "./components/private/landing/AdminLanding";
 import AlterAbout from "./components/private/misc/AlterAbout";
 import AlterLanding from "./components/private/misc/AlterLanding";
+import AlterContact from "./components/private/misc/AlterContact";
 
 //Loggin actions
 import jwt_decode from "jwt-decode";
@@ -77,6 +78,12 @@ class App extends Component {
                 path="/admin/misc/landing"
                 minlevel={1}
                 component={AlterLanding}
+              />
+              <PrivateRoute
+                exact
+                path="/admin/misc/contact"
+                minlevel={1}
+                component={AlterContact}
               />
               <Route exact path="/forbidden" component={Forbidden} />
               <Route component={NotFound} />
