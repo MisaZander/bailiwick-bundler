@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../../actions/authActions";
-import logo from "../../../img/logo-bgless.png";
+import logo from "../../../img/ZanderStudios-01.png";
 
 class PubNavbar extends Component {
   onLogoutClick = e => {
