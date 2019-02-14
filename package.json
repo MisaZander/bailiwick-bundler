@@ -1,5 +1,5 @@
 {
-  "name": "nocturnal-breeze",
+  "name": "bailiwick-bundler",
   "version": "1.0.0",
   "description": "My ultimate creation",
   "main": "server.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MisaZander/nocturnal-breeze.git"
+    "url": "git+https://github.com/MisaZander/bailiwick-bundler.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MisaZander/nocturnal-breeze/issues"
+    "url": "https://github.com/MisaZander/bailiwick-bundler/issues"
   },
-  "homepage": "https://github.com/MisaZander/nocturnal-breeze#readme",
+  "homepage": "https://github.com/MisaZander/bailiwick-bundler#readme",
   "devDependencies": {
     "concurrently": "^4.1.0",
     "eslint": "5.6.0",
