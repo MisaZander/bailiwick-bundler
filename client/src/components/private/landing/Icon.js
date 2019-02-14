@@ -2,6 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Icon = props => {
+  let button;
+  if(props.disabled === "yes"){
+    button = <Link to={"/" + props.route}>
+          <button className="btn btn-block btn-danger" type="button" disabled>
+            {props.buttontext}
+          </button>
+        </Link>;
+  } else {
+    button = <Link to={"/" + props.route}>
+          <button className="btn btn-block btn-primary" type="button">
+            {props.buttontext}
+          </button>
+        </Link>
+  }
+  
   return (
     <div className="col-3 card" style={{ width: "250px" }}>
       <i
@@ -14,11 +29,7 @@ const Icon = props => {
         <p className="card-text text-center">{props.description}</p>
       </div>
       <div className="card-footer">
-        <Link to={"/" + props.route}>
-          <button className="btn btn-block btn-primary" type="button">
-            {props.buttontext}
-          </button>
-        </Link>
+        {button}
       </div>
     </div>
   );

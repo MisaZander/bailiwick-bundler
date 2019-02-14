@@ -22,17 +22,17 @@ class PrivNavbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/admin/gallery">
+              <Link className="nav-link disabled" to="/#">
                 Gallery Manager
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/admin/contact">
+              <Link className="nav-link disabled" to="/#">
                 Contact Preferences
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/admin/users">
+              <Link className="nav-link disabled" to="/#">
                 Black Book
               </Link>
             </li>

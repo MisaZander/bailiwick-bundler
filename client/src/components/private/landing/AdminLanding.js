@@ -19,27 +19,31 @@ class AdminLanding extends Component {
               description="Fiddle with the text on various pages."
               route="admin/misc"
               buttontext="Fiddle"
+              disabled="no"
             />
             <Icon
               icon="address-book"
               title="Black Book"
-              description="See a list of registered clients."
-              route="admin/blackbook"
+              description="See a list of registered clients. (Coming soon...)"
+              route="#"
               buttontext="Open Book"
+              disabled="yes"
             />
             <Icon
               icon="images"
               title="Gallery Manager"
-              description="Upload or manage your gallery."
-              route="admin/gallery"
+              description="Upload or manage your gallery.(Coming Soon...)"
+              route="#"
               buttontext="Develop"
+              disabled="yes"
             />
             <Icon
               icon="envelope"
               title="Contact Preferences"
-              description="Update your personal contact info and how clients contact you."
-              route="admin/contact"
+              description="Update your personal contact info and how clients contact you. (Coming soon. For now, update your calling card in the misc options.)"
+              route="#"
               buttontext="Do It"
+              disabled="yes"
             />
           </div>
         </div>
