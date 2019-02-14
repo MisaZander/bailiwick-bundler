@@ -38,3 +38,4 @@ the `.envEX` file as a base template. Run `cp .envEX .env` to copy it. Open `.en
 4. While logged in as the site owner, the control panel link will be visible in the navbar. Click this to be presented with options
 to alter the public facing content.
 5. New users who register and login will only have basic access and not see the control panel option. Users who try to access the back-end without the proper authority are kicked back to the login page or given a 403.
+6. The app will look in the `./client/src/img/gallery` for any image you want to use. Place all the images you intend to use in that folder and whenever a form prompts you for an image, give it the FILENAME of that image with extension, such as `munroe-31.jpg`.
