@@ -10,6 +10,7 @@ import PrivNavbar from "../layout/PrivNavbar";
 import Spinner from "../../common/Spinner";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import docuparser from "../../../utils/M-RFconverter";
+import Forbidden from "../../errors/Forbidden";
 
 const selector = getFormValues("formData");
 
@@ -96,11 +97,13 @@ class AlterContact extends Component {
       } // if content = about
     } // if not loading
 
-    return (
+    return this.props.auth.user.userlevel >= this.props.minlevel ? (
       <div>
         <PrivNavbar />
         <div className="container border border-dark">{renderables}</div>
       </div>
+    ) : (
+      <Forbidden />
     );
   }
 }

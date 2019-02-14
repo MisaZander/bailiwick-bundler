@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import {
   GET_ERRORS,
   CLEAR_ERRORS,
+  CLEAR_FORM,
   SET_CURRENT_USER,
   GET_CURRENT_USER,
   LOADING,
@@ -16,7 +17,12 @@ import {
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/register", userData)
-    .then(response => history.push("/login"))
+    .then(response => {
+      dispatch({
+        type: CLEAR_FORM
+      })
+      history.push("/login")
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

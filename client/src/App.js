@@ -11,6 +11,7 @@ import Register from "./components/public/auth/Register";
 import Login from "./components/public/auth/Login";
 import Profile from "./components/public/auth/Profile";
 import AdminLanding from "./components/private/landing/AdminLanding";
+import MiscLanding from "./components/private/misc/MiscLanding";
 import AlterAbout from "./components/private/misc/AlterAbout";
 import AlterLanding from "./components/private/misc/AlterLanding";
 import AlterContact from "./components/private/misc/AlterContact";
@@ -66,6 +67,12 @@ class App extends Component {
                 path="/admin"
                 minlevel={1}
                 component={AdminLanding}
+              />
+              <PrivateRoute
+                exact
+                path="/admin/misc"
+                minlevel={1}
+                component={MiscLanding}
               />
               <PrivateRoute
                 exact

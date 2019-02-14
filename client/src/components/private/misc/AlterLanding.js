@@ -11,6 +11,7 @@ import Spinner from "../../common/Spinner";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import TextAreaFieldGroup from "../../common/TextAreaFieldGroup";
 import docuparser from "../../../utils/M-RFconverter";
+import Forbidden from "../../errors/Forbidden";
 
 const selector = getFormValues("formData");
 
@@ -272,7 +273,7 @@ class AlterLanding extends Component {
       } // content === landing sanity check
     } // isLoading else
 
-    return (
+    return this.props.auth.user.userlevel >= this.props.minlevel ? (
       <div>
         <PrivNavbar />
         <div className="container border border-dark">
@@ -285,6 +286,8 @@ class AlterLanding extends Component {
           </form>
         </div>
       </div>
+    ) : (
+      <Forbidden />
     );
   }
 }
