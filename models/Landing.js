@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const LandingSchema = new Schema({
-  contentname: {
+  contentName: {
     type: String,
     required: true
   },
@@ -17,15 +17,6 @@ const LandingSchema = new Schema({
   },
   data: [
     {
-      ahref: {
-        type: String
-      },
-      aval: {
-        type: String
-      },
-      img: {
-        type: String
-      },
       key: {
         type: Number,
         required: true
@@ -37,7 +28,7 @@ const LandingSchema = new Schema({
       texttype: {
         type: String
       },
-      title: {
+      cattype: {
         type: String
       }
     }

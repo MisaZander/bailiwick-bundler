@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const MotherOfAllSchemas = new Schema({
-  contentname: {
+  contentName: {
     type: String,
     required: true
   },

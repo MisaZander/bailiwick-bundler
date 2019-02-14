@@ -8,10 +8,12 @@ const users = require("./routes/api/users");
 // const profile = require("./routes/api/profile");
 // const posts = require("./routes/api/posts");
 const content = require("./routes/api/content");
+const seeder = require("./models/Seeds");
 
 const app = express();
 
 const PORT = process.env.PORT || 8080;
+const MONGOURI = process.env.MONGODB_URI || process.env.MONGOURI; // Heroku env or local .env
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -43,11 +45,12 @@ if (process.env.NODE_ENV === "production") {
 //Connect to Mongo
 mongoose
   .connect(
-    process.env.MONGOURI,
+    MONGOURI,
     { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false }
   )
   .then(() => {
     console.log("Connected to Mongo.");
+    seeder();
     app.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
   })
   .catch(err => console.log(err));
