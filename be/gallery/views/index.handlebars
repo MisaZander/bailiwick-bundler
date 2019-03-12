@@ -1,0 +1,20 @@
+<div class="container">
+  <h1>File Upload</h1>
+  <div class="custom-file">
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" class="custom-file-input" id="customFile" name="customFile" multiple>
+      <label class="custom-file-label" for="customFile">Choose file</label>
+      {{#if message}}
+      <p class="text-success">{{message}}</p>
+      {{/if}}
+      {{#if error}}
+      <p class="text-danger">{{error}}</p>
+      {{/if}}
+      <hr class="my-5" />
+      <button type="submit" class="btn btn-primary btn-block">JEW IT!</button>
+    </form>
+  </div>
+  {{#if file}}
+  <img src="{{file}}" class="img-fluid" alt="Upload!" />
+  {{/if}}
+</div>

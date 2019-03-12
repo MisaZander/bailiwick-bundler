@@ -1,0 +1,29 @@
+[33m[nodemon] 1.18.10[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching: *.*[39m
+[32m[nodemon] starting `node server.js`[39m
+Server listening on: http://localhost:8080
+[ { fieldname: 'customFile',
+    originalname: 'AngrySupervisorMonkey.jpg',
+    encoding: '7bit',
+    mimetype: 'image/jpeg',
+    destination: 'D:\\XAMPP\\htdocs\\BCS\\sandbox\\gallery\\public\\uploads\\',
+    filename: 'f467083d-bdde-46ee-aed5-fb5e3766d01e.jpg',
+    path: 'D:\\XAMPP\\htdocs\\BCS\\sandbox\\gallery\\public\\uploads\\f467083d-bdde-46ee-aed5-fb5e3766d01e.jpg',
+    size: 1551129 },
+  { fieldname: 'customFile',
+    originalname: 'Comp Status.jpg',
+    encoding: '7bit',
+    mimetype: 'image/jpeg',
+    destination: 'D:\\XAMPP\\htdocs\\BCS\\sandbox\\gallery\\public\\uploads\\',
+    filename: '872c65f7-833e-41fa-bff0-3c9600fe8b9e.jpg',
+    path: 'D:\\XAMPP\\htdocs\\BCS\\sandbox\\gallery\\public\\uploads\\872c65f7-833e-41fa-bff0-3c9600fe8b9e.jpg',
+    size: 56109 },
+  { fieldname: 'customFile',
+    originalname: 'heyyeyaaeyaaaeyaeyaa_by_orcaizeral-d4j8clf.jpg',
+    encoding: '7bit',
+    mimetype: 'image/jpeg',
+    destination: 'D:\\XAMPP\\htdocs\\BCS\\sandbox\\gallery\\public\\uploads\\',
+    filename: '0cd52a57-e19d-4bd5-ac76-86dc7bbfcde1.jpg',
+    path: 'D:\\XAMPP\\htdocs\\BCS\\sandbox\\gallery\\public\\uploads\\0cd52a57-e19d-4bd5-ac76-86dc7bbfcde1.jpg',
+    size: 1324313 } ]
